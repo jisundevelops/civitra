@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civitra Use Case Diagram</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12;
+    font-family: 'Segoe UI', sans-serif;
+    color: #e0dff5;
+    padding: 36px 24px;
+    min-height: 100vh;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #6366f1;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .header p {
+    color: #5c5a72;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+  .card {
+    background: #13131e;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 40px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 0 80px rgba(99,102,241,0.07);
+  }
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 11px;
+    color: #2e2d42;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  svg text { font-family: 'Segoe UI', sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>CIVITRA</h1>
+  <p>Use Case Diagram — System Actors & Interactions</p>
+</div>
+
+<div class="card">
+<svg width="100%" viewBox="0 0 1100 820" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Arrow marker -->
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#3d3b52" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- ═══ SYSTEM BOUNDARY ═══ -->
+  <rect x="200" y="40" width="720" height="740" rx="18"
+    fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+  <text x="560" y="28" text-anchor="middle" font-size="13" fill="#6366f1" font-weight="700" letter-spacing="2" opacity="0.8">CIVITRA SYSTEM</text>
+
+  <!-- ═══ ACTOR: CITIZEN (left) ═══ -->
+  <!-- Head -->
+  <circle cx="80" cy="190" r="22" fill="none" stroke="#10b981" stroke-width="2"/>
+  <!-- Body -->
+  <line x1="80" y1="212" x2="80" y2="268" stroke="#10b981" stroke-width="2"/>
+  <!-- Arms -->
+  <line x1="50" y1="235" x2="110" y2="235" stroke="#10b981" stroke-width="2"/>
+  <!-- Legs -->
+  <line x1="80" y1="268" x2="55" y2="300" stroke="#10b981" stroke-width="2"/>
+  <line x1="80" y1="268" x2="105" y2="300" stroke="#10b981" stroke-width="2"/>
+  <text x="80" y="322" text-anchor="middle" font-size="13" fill="#10b981" font-weight="700">Citizen</text>
+
+  <!-- ═══ ACTOR: TRAFFIC POLICE (left) ═══ -->
+  <circle cx="80" cy="500" r="22" fill="none" stroke="#06b6d4" stroke-width="2"/>
+  <line x1="80" y1="522" x2="80" y2="578" stroke="#06b6d4" stroke-width="2"/>
+  <line x1="50" y1="545" x2="110" y2="545" stroke="#06b6d4" stroke-width="2"/>
+  <line x1="80" y1="578" x2="55" y2="610" stroke="#06b6d4" stroke-width="2"/>
+  <line x1="80" y1="578" x2="105" y2="610" stroke="#06b6d4" stroke-width="2"/>
+  <text x="80" y="632" text-anchor="middle" font-size="13" fill="#06b6d4" font-weight="700">Traffic</text>
+  <text x="80" y="648" text-anchor="middle" font-size="13" fill="#06b6d4" font-weight="700">Police</text>
+
+  <!-- ═══ ACTOR: ADMIN (right) ═══ -->
+  <circle cx="1020" cy="380" r="22" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="1020" y1="402" x2="1020" y2="458" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="990" y1="425" x2="1050" y2="425" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="1020" y1="458" x2="995" y2="490" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="1020" y1="458" x2="1045" y2="490" stroke="#f59e0b" stroke-width="2"/>
+  <text x="1020" y="512" text-anchor="middle" font-size="13" fill="#f59e0b" font-weight="700">Admin</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- USE CASES — CITIZEN (green oval)  -->
+  <!-- ══════════════════════════════════ -->
+
+  <!-- UC1: Register Account -->
+  <ellipse cx="390" cy="130" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="134" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">Register Account</text>
+
+  <!-- UC2: Login -->
+  <ellipse cx="390" cy="200" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="204" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">Login to System</text>
+
+  <!-- UC3: View Violations -->
+  <ellipse cx="390" cy="270" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="274" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">View My Violations</text>
+
+  <!-- UC4: Pay Fine -->
+  <ellipse cx="390" cy="340" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="344" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">Pay Fine Online</text>
+
+  <!-- UC5: Get Receipt -->
+  <ellipse cx="390" cy="410" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="414" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">Get Digital Receipt</text>
+
+  <!-- UC6: View Payment History -->
+  <ellipse cx="390" cy="480" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="484" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">View Payment History</text>
+
+  <!-- UC7: Update Profile -->
+  <ellipse cx="390" cy="550" rx="110" ry="28" fill="#0d1f1a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="390" y="554" text-anchor="middle" font-size="12" fill="#10b981" font-weight="600">Update Profile</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- USE CASES — POLICE (cyan oval)    -->
+  <!-- ══════════════════════════════════ -->
+
+  <!-- UC8: Issue Ticket -->
+  <ellipse cx="620" cy="530" rx="120" ry="28" fill="#0a1a20" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="620" y="534" text-anchor="middle" font-size="12" fill="#06b6d4" font-weight="600">Issue Digital Ticket</text>
+
+  <!-- UC9: View All Violations -->
+  <ellipse cx="620" cy="600" rx="120" ry="28" fill="#0a1a20" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="620" y="604" text-anchor="middle" font-size="12" fill="#06b6d4" font-weight="600">View All Violations</text>
+
+  <!-- UC10: Update Violation -->
+  <ellipse cx="620" cy="670" rx="120" ry="28" fill="#0a1a20" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="620" y="674" text-anchor="middle" font-size="12" fill="#06b6d4" font-weight="600">Update/Cancel Ticket</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- USE CASES — ADMIN (amber oval)    -->
+  <!-- ══════════════════════════════════ -->
+
+  <!-- UC11: Manage Users -->
+  <ellipse cx="820" cy="130" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="134" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">Manage Users</text>
+
+  <!-- UC12: Create Officer -->
+  <ellipse cx="820" cy="200" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="204" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">Create Police Account</text>
+
+  <!-- UC13: Monitor System -->
+  <ellipse cx="820" cy="270" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="274" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">Monitor System</text>
+
+  <!-- UC14: Generate Reports -->
+  <ellipse cx="820" cy="340" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="344" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">Generate Reports</text>
+
+  <!-- UC15: Configure Violations -->
+  <ellipse cx="820" cy="410" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="414" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">Configure Fine Types</text>
+
+  <!-- UC16: View Dashboard -->
+  <ellipse cx="820" cy="480" rx="110" ry="28" fill="#1e1505" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="820" y="484" text-anchor="middle" font-size="12" fill="#f59e0b" font-weight="600">View Dashboard Stats</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- CITIZEN CONNECTIONS               -->
+  <!-- ══════════════════════════════════ -->
+  <line x1="102" y1="183" x2="278" y2="135" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="190" x2="278" y2="200" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="200" x2="278" y2="265" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="210" x2="278" y2="335" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="218" x2="278" y2="405" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="225" x2="278" y2="478" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+  <line x1="102" y1="232" x2="278" y2="548" stroke="#10b981" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-green)"/>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- POLICE CONNECTIONS                -->
+  <!-- ══════════════════════════════════ -->
+  <line x1="102" y1="508" x2="498" y2="530" stroke="#06b6d4" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-cyan)"/>
+  <line x1="102" y1="518" x2="498" y2="598" stroke="#06b6d4" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-cyan)"/>
+  <line x1="102" y1="528" x2="498" y2="668" stroke="#06b6d4" stroke-width="1.2" opacity="0.7" marker-end="url(#arr-cyan)"/>
+  <!-- Police also uses Login -->
+  <line x1="102" y1="498" x2="278" y2="205" stroke="#06b6d4" stroke-width="1" opacity="0.35" stroke-dasharray="4 3" marker-end="url(#arr-cyan)"/>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- ADMIN CONNECTIONS                 -->
+  <!-- ══════════════════════════════════ -->
+  <line x1="998" y1="368" x2="932" y2="135" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <line x1="998" y1="375" x2="932" y2="203" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <line x1="998" y1="380" x2="932" y2="272" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <line x1="998" y1="385" x2="932" y2="342" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <line x1="998" y1="390" x2="932" y2="412" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <line x1="998" y1="395" x2="932" y2="482" stroke="#f59e0b" stroke-width="1.2" opacity="0.7" marker-end="url(#arr)"/>
+  <!-- Admin also uses Login -->
+  <line x1="998" y1="360" x2="502" y2="200" stroke="#f59e0b" stroke-width="1" opacity="0.25" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- INCLUDE relations                 -->
+  <!-- ══════════════════════════════════ -->
+  <!-- Pay Fine <<includes>> Get Receipt -->
+  <line x1="390" y1="368" x2="390" y2="382" stroke="#a09eb8" stroke-width="1" stroke-dasharray="4 3" opacity="0.6" marker-end="url(#arr-gray)"/>
+  <text x="408" y="378" font-size="10" fill="#5c5a72" font-style="italic">«include»</text>
+
+  <!-- Issue Ticket <<includes>> Login -->
+  <line x1="540" y1="520" x2="456" y2="212" stroke="#a09eb8" stroke-width="1" stroke-dasharray="4 3" opacity="0.4" marker-end="url(#arr-gray)"/>
+  <text x="470" y="360" font-size="10" fill="#5c5a72" font-style="italic" transform="rotate(-55 470 360)">«include»</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION LABELS                   -->
+  <!-- ══════════════════════════════════ -->
+  <rect x="215" y="90" width="350" height="510" rx="12" fill="none" stroke="#10b981" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.2"/>
+  <text x="390" y="82" text-anchor="middle" font-size="10" fill="#10b981" opacity="0.5" letter-spacing="1" font-weight="600">CITIZEN USE CASES</text>
+
+  <rect x="468" y="500" width="305" height="215" rx="12" fill="none" stroke="#06b6d4" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.2"/>
+  <text x="620" y="492" text-anchor="middle" font-size="10" fill="#06b6d4" opacity="0.5" letter-spacing="1" font-weight="600">POLICE USE CASES</text>
+
+  <rect x="685" y="90" width="260" height="450" rx="12" fill="none" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.2"/>
+  <text x="820" y="82" text-anchor="middle" font-size="10" fill="#f59e0b" opacity="0.5" letter-spacing="1" font-weight="600">ADMIN USE CASES</text>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- LEGEND                            -->
+  <!-- ══════════════════════════════════ -->
+  <rect x="220" y="730" width="660" height="44" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- legend items -->
+  <line x1="250" y1="752" x2="275" y2="752" stroke="#10b981" stroke-width="1.5"/>
+  <circle cx="262" cy="752" r="3" fill="#10b981"/>
+  <text x="282" y="756" font-size="11" fill="#a09eb8">Citizen</text>
+
+  <line x1="350" y1="752" x2="375" y2="752" stroke="#06b6d4" stroke-width="1.5"/>
+  <circle cx="362" cy="752" r="3" fill="#06b6d4"/>
+  <text x="382" y="756" font-size="11" fill="#a09eb8">Police</text>
+
+  <line x1="450" y1="752" x2="475" y2="752" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="462" cy="752" r="3" fill="#f59e0b"/>
+  <text x="482" y="756" font-size="11" fill="#a09eb8">Admin</text>
+
+  <line x1="550" y1="752" x2="575" y2="752" stroke="#a09eb8" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="582" y="756" font-size="11" fill="#a09eb8">«include» / «extends»</text>
+
+  <ellipse cx="730" cy="752" rx="18" ry="9" fill="none" stroke="#6366f1" stroke-width="1.2"/>
+  <text x="756" y="756" font-size="11" fill="#a09eb8">Use Case</text>
+
+  <circle cx="830" cy="752" r="10" fill="none" stroke="#a09eb8" stroke-width="1.5"/>
+  <line x1="830" y1="762" x2="830" y2="778" stroke="#a09eb8" stroke-width="1.5"/>
+  <line x1="818" y1="770" x2="842" y2="770" stroke="#a09eb8" stroke-width="1.5"/>
+  <text x="848" y="756" font-size="11" fill="#a09eb8">Actor</text>
+
+</svg>
+</div>
+
+<div class="footer">
+  University of Information Technology and Sciences (UITS) &nbsp;·&nbsp; Software Engineering Lab &nbsp;·&nbsp; Civitra v1.0
+</div>
+
+</body>
+</html>

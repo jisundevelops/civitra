@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civitra ER Diagram</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f1a;
+    color: #e0dff5;
+    margin: 0;
+    padding: 30px;
+    min-height: 100vh;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #6366f1;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .header p {
+    color: #5c5a72;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .diagram-card {
+    background: #16161f;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-shadow: 0 0 60px rgba(99,102,241,0.08);
+  }
+  #erd svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #a09eb8;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: #3d3b52;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>CIVITRA</h1>
+  <p>Entity Relationship Diagram — Database Design</p>
+</div>
+
+<div class="diagram-card">
+  <div id="erd"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div> Primary Key (PK)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div> Foreign Key (FK)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div> One-to-Many</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Optional Relation</div>
+  </div>
+</div>
+
+<div class="footer">
+  University of Information Technology and Sciences (UITS) &nbsp;|&nbsp; Software Engineering Lab
+</div>
+
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Segoe UI", sans-serif',
+  themeVariables: {
+    darkMode: true,
+    fontSize: '13px',
+    fontFamily: '"Segoe UI", sans-serif',
+    primaryColor: '#1e1e2e',
+    primaryTextColor: '#e0dff5',
+    primaryBorderColor: '#6366f1',
+    lineColor: '#6366f1',
+    secondaryColor: '#16161f',
+    tertiaryColor: '#1a1a2e',
+    background: '#16161f',
+    mainBkg: '#1e1e2e',
+    nodeBorder: '#6366f1',
+    clusterBkg: '#16161f',
+    titleColor: '#e0dff5',
+    edgeLabelBackground: '#16161f',
+    attributeBackgroundColorEven: '#1a1a28',
+    attributeBackgroundColorOdd: '#16161f',
+  },
+});
+
+const diagram = `erDiagram
+  USERS {
+    int id PK
+    varchar name
+    varchar email
+    varchar password
+    varchar phone
+    varchar nid
+    enum role
+    timestamp created_at
+  }
+
+  VEHICLES {
+    int id PK
+    varchar registration_number
+    int owner_id FK
+    varchar vehicle_type
+  }
+
+  VIOLATION_TYPES {
+    int id PK
+    varchar name
+    text description
+    decimal fine_amount
+  }
+
+  VIOLATIONS {
+    int id PK
+    int vehicle_id FK
+    int officer_id FK
+    int violation_type_id FK
+    varchar location
+    datetime date_time
+    decimal fine_amount
+    enum status
+    text notes
+  }
+
+  PAYMENTS {
+    int id PK
+    int violation_id FK
+    int citizen_id FK
+    decimal amount
+    timestamp payment_date
+    varchar receipt_number
+    enum status
+  }
+
+  USERS ||--o{ VEHICLES : "owns"
+  USERS ||--o{ VIOLATIONS : "issues (as officer)"
+  USERS ||--o{ PAYMENTS : "makes (as citizen)"
+  VEHICLES ||--o{ VIOLATIONS : "receives"
+  VIOLATION_TYPES ||--o{ VIOLATIONS : "categorizes"
+  VIOLATIONS ||--o| PAYMENTS : "cleared by"
+`;
+
+const { svg } = await mermaid.render('erd-svg', diagram);
+document.getElementById('erd').innerHTML = svg;
+
+// Style improvements
+const svgEl = document.querySelector('#erd svg');
+if (svgEl) {
+  svgEl.style.borderRadius = '8px';
+
+  // Round entity box corners
+  document.querySelectorAll('#erd svg .node').forEach(node => {
+    const firstPath = node.querySelector('path[d]');
+    if (!firstPath) return;
+    const d = firstPath.getAttribute('d');
+    const nums = d.match(/-?[\d.]+/g)?.map(Number);
+    if (!nums || nums.length < 8) return;
+    const xs = [nums[0], nums[2], nums[4], nums[6]];
+    const ys = [nums[1], nums[3], nums[5], nums[7]];
+    const x = Math.min(...xs), y = Math.min(...ys);
+    const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', y);
+    rect.setAttribute('width', w); rect.setAttribute('height', h);
+    rect.setAttribute('rx', '10');
+    for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+      if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+    }
+    firstPath.replaceWith(rect);
+  });
+
+  // Remove borders from attribute rows
+  document.querySelectorAll('#erd svg .row-rect-odd path, #erd svg .row-rect-even path').forEach(p => {
+    p.setAttribute('stroke', 'none');
+  });
+}
+</script>
+</body>
+</html>
