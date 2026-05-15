@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
@@ -25,7 +25,7 @@ model User {
 }
 
 model Vehicle {
-  id                 String   @id @default(cuid())
+  id                 String   @id @default(uuid())
   registrationNumber String   @unique
   ownerId            String?
   vehicleType        String?
@@ -36,7 +36,7 @@ model Vehicle {
 }
 
 model ViolationType {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   name        String
   description String?
   fineAmount  Float
@@ -48,7 +48,7 @@ model ViolationType {
 }
 
 model Violation {
-  id              String   @id @default(cuid())
+  id              String   @id @default(uuid())
   vehicleId       String
   officerId       String
   violationTypeId String
@@ -67,7 +67,7 @@ model Violation {
 }
 
 model Payment {
-  id            String   @id @default(cuid())
+  id            String   @id @default(uuid())
   violationId   String   @unique
   citizenId     String
   amount        Float
@@ -81,10 +81,12 @@ model Payment {
 }
 
 model OtpVerification {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   email     String
   otp       String
   expiresAt DateTime
   createdAt DateTime @default(now())
   verified  Boolean  @default(false)
+
+  @@index([email])
 }
