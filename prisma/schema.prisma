@@ -79,3 +79,12 @@ model Payment {
   violation Violation @relation(fields: [violationId], references: [id])
   citizen   User      @relation(fields: [citizenId], references: [id])
 }
+
+model OtpVerification {
+  id        String   @id @default(cuid())
+  email     String
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  verified  Boolean  @default(false)
+}

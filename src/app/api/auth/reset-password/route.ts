@@ -24,13 +24,13 @@ export async function POST(request: Request) {
   const sanitizedEmail = sanitizeString(email).toLowerCase();
 
   // Verify OTP
-  const storedOtp = getOtp(sanitizedEmail);
+  const storedOtp = await getOtp(sanitizedEmail);
   if (!storedOtp) {
     return NextResponse.json({ error: "No OTP found. Please request a new one." }, { status: 400 });
   }
 
   if (Date.now() > storedOtp.expiresAt) {
-    deleteOtp(sanitizedEmail);
+    await deleteOtp(sanitizedEmail);
     return NextResponse.json({ error: "OTP has expired. Please request a new one." }, { status: 400 });
   }
 
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
   });
 
   // Delete used OTP
-  deleteOtp(sanitizedEmail);
+  await deleteOtp(sanitizedEmail);
 
   return NextResponse.json({ message: "Password reset successful" });
 }

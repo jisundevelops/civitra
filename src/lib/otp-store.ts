@@ -1,14 +1,33 @@
-// In-memory OTP store (for dev phase - in production use email/Redis)
-const otpStore = new Map<string, { otp: string; expiresAt: number }>();
+import { db } from '@/lib/db';
 
-export function setOtp(email: string, otp: string, expiresAt: number) {
-  otpStore.set(email, { otp, expiresAt });
+export async function setOtp(email: string, otp: string, expiresAt: number) {
+  // Delete any existing OTP for this email
+  await db.otpVerification.deleteMany({ where: { email } });
+
+  // Create new OTP record
+  await db.otpVerification.create({
+    data: {
+      email,
+      otp,
+      expiresAt: new Date(expiresAt),
+    },
+  });
 }
 
-export function getOtp(email: string): { otp: string; expiresAt: number } | undefined {
-  return otpStore.get(email);
+export async function getOtp(email: string): Promise<{ otp: string; expiresAt: number } | null> {
+  const record = await db.otpVerification.findFirst({
+    where: { email },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  if (!record) return null;
+
+  return {
+    otp: record.otp,
+    expiresAt: record.expiresAt.getTime(),
+  };
 }
 
-export function deleteOtp(email: string) {
-  otpStore.delete(email);
+export async function deleteOtp(email: string) {
+  await db.otpVerification.deleteMany({ where: { email } });
 }

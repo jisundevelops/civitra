@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes expiry
 
-  setOtp(sanitizedEmail, otp, expiresAt);
+  await setOtp(sanitizedEmail, otp, expiresAt);
 
   // In development, return the OTP for testing
   return NextResponse.json({

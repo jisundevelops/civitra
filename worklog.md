@@ -56,3 +56,59 @@ Stage Summary:
 - All 5 missing features implemented with UI
 - All 2 incomplete features completed
 - Security bugs fixed (payment ownership, input validation)
+
+---
+Task ID: 3
+Agent: Migration Agent
+Task: Migrate Civitra to PostgreSQL for Vercel deployment (serverless compatibility)
+
+Work Log:
+- Updated prisma/schema.prisma: changed provider from "sqlite" to "postgresql", changed all @id @default(cuid()) to @id @default(uuid())
+- Added OtpVerification model to Prisma schema (id, email, otp, expiresAt, createdAt, verified, @@index([email]))
+- Replaced in-memory OTP store (Map) with Prisma-backed OTP store in src/lib/otp-store.ts (async setOtp, getOtp, deleteOtp using db.otpVerification)
+- Updated forgot-password route: added await before setOtp() call
+- Updated reset-password route: added await before getOtp() and deleteOtp() calls, updated null check (was undefined from Map, now null from Prisma)
+- Updated package.json: added "postinstall": "prisma generate", added "db:migrate:deploy": "prisma migrate deploy", simplified build script to "next build" (removed standalone output copy)
+- Updated next.config.ts: removed output: "standalone" (Vercel handles this automatically)
+- Updated src/lib/db.ts: conditional logging - ['query', 'error', 'warn'] in development, ['error'] only in production
+- Created .env.example with DATABASE_URL, JWT_SECRET, NODE_ENV templates
+- Created .env.local.example with same content for local dev reference
+- Pushed OtpVerification model to local SQLite database (temporarily switched provider back to sqlite for local db:push, then restored to postgresql)
+- Regenerated Prisma Client for PostgreSQL provider
+- Created DEPLOY.md with comprehensive Vercel deployment instructions (GitHub, Neon, Vercel setup, seeding, troubleshooting)
+- Lint check passed with no errors
+
+Stage Summary:
+- Prisma schema fully migrated to PostgreSQL (provider, uuid IDs, OtpVerification model)
+- OTP storage migrated from in-memory Map to database-backed Prisma queries (serverless-compatible)
+- All OTP-related API routes updated with async/await
+- Build configuration cleaned up for Vercel (removed standalone output, added postinstall)
+- Production logging reduced to errors only
+- Deployment documentation created
+- Local dev database updated with new OtpVerification table
+- Note: local dev uses SQLite (provider temporarily switched for db:push); production uses PostgreSQL via Neon
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Finalize Vercel deployment preparation - fix local dev compatibility, create deployment guide, test all changes
+
+Work Log:
+- Reverted Prisma schema to SQLite provider for local sandbox compatibility (cuid() IDs, no @@index)
+- Kept OtpVerification model in schema (works with both SQLite and PostgreSQL)
+- Pushed updated schema to local SQLite database successfully
+- Verified OTP flow works end-to-end with database-backed store (forgot-password → reset-password)
+- Verified admin stats API still returns correct data
+- Updated DEPLOY.md with comprehensive step-by-step instructions including the critical SQLite→PostgreSQL switch
+- Updated .gitignore to exclude sensitive files but include .env.example templates
+- Added db/*.db, upload/, agent-ctx/, download/, examples/, mini-services/ to .gitignore
+- All lint checks pass
+- Dev server running correctly with all API endpoints functional
+
+Stage Summary:
+- Project is fully Vercel-deployable following DEPLOY.md instructions
+- Local dev uses SQLite, production will use Neon PostgreSQL
+- Key deployment step: change prisma provider from "sqlite" to "postgresql" and cuid() → uuid()
+- OTP store is database-backed (serverless-compatible)
+- Build config ready for Vercel (no standalone, has postinstall for prisma generate)
+- Test accounts verified working
