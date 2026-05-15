@@ -1,0 +1,49 @@
+import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { comparePassword, generateToken } from "@/lib/auth";
+import { sanitizeString } from "@/lib/validation";
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { email, password } = body;
+
+  if (!email || !password) {
+    return NextResponse.json(
+      { error: "Email and password are required" },
+      { status: 400 }
+    );
+  }
+
+  const sanitizedEmail = sanitizeString(email).toLowerCase();
+
+  const user = await db.user.findUnique({ where: { email: sanitizedEmail } });
+  if (!user) {
+    return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+  }
+
+  if (!user.isActive) {
+    return NextResponse.json({ error: "Account is deactivated" }, { status: 403 });
+  }
+
+  const isValid = await comparePassword(password, user.password);
+  if (!isValid) {
+    return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+  }
+
+  const token = generateToken({
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    name: user.name,
+  });
+
+  return NextResponse.json({
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
+}

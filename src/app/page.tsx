@@ -1,31 +1,86 @@
-'use client'
+'use client';
+
+import React from 'react';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import AppLayout from '@/components/civitra/AppLayout';
+import LoginPage from '@/components/civitra/LoginPage';
+import RegisterPage from '@/components/civitra/RegisterPage';
+import ForgotPasswordPage from '@/components/civitra/ForgotPasswordPage';
+import DashboardPage from '@/components/civitra/DashboardPage';
+import MyViolationsPage from '@/components/civitra/MyViolationsPage';
+import AllViolationsPage from '@/components/civitra/AllViolationsPage';
+import PayFinePage from '@/components/civitra/PayFinePage';
+import PaymentHistoryPage from '@/components/civitra/PaymentHistoryPage';
+import IssueTicketPage from '@/components/civitra/IssueTicketPage';
+import AdminUsersPage from '@/components/civitra/AdminUsersPage';
+import ReportsPage from '@/components/civitra/ReportsPage';
+import ViolationTypesPage from '@/components/civitra/ViolationTypesPage';
+import ProfilePage from '@/components/civitra/ProfilePage';
+import { Skeleton } from '@/components/ui/skeleton';
+
+function AppContent() {
+  const { user, loading, currentPage } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="space-y-4 text-center">
+          <div className="h-12 w-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center mx-auto animate-pulse">
+            <div className="h-6 w-6 rounded bg-indigo-500/40" />
+          </div>
+          <p className="text-zinc-500 text-sm">Loading Civitra...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not logged in - show auth pages only
+  if (!user) {
+    switch (currentPage) {
+      case 'register':
+        return <RegisterPage />;
+      case 'forgot-password':
+        return <ForgotPasswordPage />;
+      default:
+        return <LoginPage />;
+    }
+  }
+
+  // Logged in - show app layout with page
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <DashboardPage />;
+      case 'my-violations':
+        return <MyViolationsPage />;
+      case 'all-violations':
+        return <AllViolationsPage />;
+      case 'pay-fine':
+        return <PayFinePage />;
+      case 'payment-history':
+        return <PaymentHistoryPage />;
+      case 'issue-ticket':
+        return <IssueTicketPage />;
+      case 'admin-users':
+        return <AdminUsersPage />;
+      case 'reports':
+        return <ReportsPage />;
+      case 'violation-types':
+        return <ViolationTypesPage />;
+      case 'profile':
+        return <ProfilePage />;
+      default:
+        return <DashboardPage />;
+    }
+  };
+
+  return <AppLayout>{renderPage()}</AppLayout>;
+}
 
 export default function Home() {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      gap: '2rem',
-      padding: '1rem'
-    }}>
-      <div style={{
-        position: 'relative',
-        width: '6rem',
-        height: '6rem'
-      }}>
-        <img
-          src="/logo.svg"
-          alt="Z.ai Logo"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain'
-          }}
-        />
-      </div>
-    </div>
-  )
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
 }

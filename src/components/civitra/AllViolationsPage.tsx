@@ -1,0 +1,174 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { api } from '@/lib/api';
+import type { Violation } from '@/types';
+import UpdateViolationDialog from './UpdateViolationDialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search, AlertTriangle, Pencil } from 'lucide-react';
+
+function StatusBadge({ status }: { status: string }) {
+  const colors: Record<string, string> = {
+    pending: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+    paid: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+    cancelled: 'bg-red-500/15 text-red-400 border-red-500/30',
+  };
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[status] || 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'}`}>
+      {status.charAt(0).toUpperCase() + status.slice(1)}
+    </span>
+  );
+}
+
+export default function AllViolationsPage() {
+  const [violations, setViolations] = useState<Violation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedViolation, setSelectedViolation] = useState<Violation | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    loadViolations();
+  }, [statusFilter]);
+
+  const loadViolations = async (searchTerm?: string) => {
+    setLoading(true);
+    try {
+      const params: Record<string, string> = {};
+      if (statusFilter !== 'all') params.status = statusFilter;
+      if (searchTerm) params.search = searchTerm;
+      const data = await api.getViolations(params);
+      setViolations(data);
+    } catch (err) {
+      console.error('Failed to load violations:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    if (searchTimeout) clearTimeout(searchTimeout);
+    const timeout = setTimeout(() => {
+      loadViolations(value);
+    }, 400);
+    setSearchTimeout(timeout);
+  };
+
+  const handleUpdateClick = (violation: Violation) => {
+    setSelectedViolation(violation);
+    setDialogOpen(true);
+  };
+
+  const handleUpdateSuccess = () => {
+    setDialogOpen(false);
+    setSelectedViolation(null);
+    loadViolations(search);
+  };
+
+  return (
+    <div className="space-y-6 animate-fadeIn">
+      <h2 className="text-xl font-bold text-white">All Violations</h2>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+          <Input
+            placeholder="Search by vehicle, owner, or violation..."
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="pl-9 bg-[#16161f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600"
+          />
+        </div>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-full sm:w-40 bg-[#16161f] border-zinc-700 text-zinc-200">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#16161f] border-zinc-700">
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="paid">Paid</SelectItem>
+            <SelectItem value="cancelled">Cancelled</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">
+          {[...Array(5)].map((_, i) => (
+            <Skeleton key={i} className="h-16 bg-[#16161f]" />
+          ))}
+        </div>
+      ) : violations.length === 0 ? (
+        <Card className="bg-[#16161f] border-zinc-800/50">
+          <CardContent className="py-12 text-center">
+            <AlertTriangle className="h-12 w-12 text-zinc-600 mx-auto mb-3" />
+            <p className="text-zinc-400 text-lg font-medium">No violations found</p>
+            <p className="text-zinc-500 text-sm mt-1">Try adjusting your search or filter</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="bg-[#16161f] border-zinc-800/50">
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-zinc-800">
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Vehicle</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Owner</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Violation</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Location</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Fine</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Status</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Officer</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Date</th>
+                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {violations.map((v) => (
+                    <tr key={v.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/20 transition-colors">
+                      <td className="py-3 px-4 text-zinc-200 font-mono text-xs">{v.registrationNumber || '—'}</td>
+                      <td className="py-3 px-4 text-zinc-300">{v.ownerName || '—'}</td>
+                      <td className="py-3 px-4 text-zinc-300">{v.violationTypeName || '—'}</td>
+                      <td className="py-3 px-4 text-zinc-400">{v.location || '—'}</td>
+                      <td className="py-3 px-4 text-zinc-200 font-medium">৳{v.fineAmount.toLocaleString()}</td>
+                      <td className="py-3 px-4"><StatusBadge status={v.status} /></td>
+                      <td className="py-3 px-4 text-zinc-400">{v.officerName || '—'}</td>
+                      <td className="py-3 px-4 text-zinc-400 text-xs">{new Date(v.dateTime).toLocaleDateString()}</td>
+                      <td className="py-3 px-4">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleUpdateClick(v)}
+                          className="text-zinc-400 hover:text-indigo-400 hover:bg-indigo-500/10 h-7 text-xs"
+                        >
+                          <Pencil className="h-3 w-3 mr-1" />
+                          Update
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <UpdateViolationDialog
+        violation={selectedViolation}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onSuccess={handleUpdateSuccess}
+      />
+    </div>
+  );
+}
