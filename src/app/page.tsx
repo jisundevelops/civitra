@@ -3,6 +3,7 @@
 import React from 'react';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import AppLayout from '@/components/civitra/AppLayout';
+import LandingPage from '@/components/civitra/LandingPage';
 import LoginPage from '@/components/civitra/LoginPage';
 import RegisterPage from '@/components/civitra/RegisterPage';
 import ForgotPasswordPage from '@/components/civitra/ForgotPasswordPage';
@@ -16,10 +17,9 @@ import AdminUsersPage from '@/components/civitra/AdminUsersPage';
 import ReportsPage from '@/components/civitra/ReportsPage';
 import ViolationTypesPage from '@/components/civitra/ViolationTypesPage';
 import ProfilePage from '@/components/civitra/ProfilePage';
-import { Skeleton } from '@/components/ui/skeleton';
 
 function AppContent() {
-  const { user, loading, currentPage } = useAuth();
+  const { user, loading, currentPage, setCurrentPage } = useAuth();
 
   if (loading) {
     return (
@@ -34,9 +34,11 @@ function AppContent() {
     );
   }
 
-  // Not logged in - show auth pages only
+  // Not logged in - show landing or auth pages
   if (!user) {
     switch (currentPage) {
+      case 'landing':
+        return <LandingPage onGetStarted={() => setCurrentPage('login')} />;
       case 'register':
         return <RegisterPage />;
       case 'forgot-password':

@@ -79,6 +79,7 @@ export interface ReportData {
 }
 
 export type PageName =
+  | 'landing'
   | 'login'
   | 'register'
   | 'forgot-password'

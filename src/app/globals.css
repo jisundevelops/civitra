@@ -125,6 +125,11 @@
 
 /* Civitra Custom Styles */
 
+/* Smooth scroll for landing page */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

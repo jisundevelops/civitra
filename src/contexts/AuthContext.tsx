@@ -30,7 +30,7 @@ function getInitialAuthState(): { user: User | null; token: string | null; curre
       localStorage.removeItem('civitra_user');
     }
   }
-  return { user: null, token: null, currentPage: 'login' };
+  return { user: null, token: null, currentPage: 'landing' };
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('civitra_user');
     setToken(null);
     setUser(null);
-    setCurrentPage('login');
+    setCurrentPage('landing');
     setSelectedViolationId(null);
   }, []);
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
-import { Shield } from 'lucide-react';
+import { Shield, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -99,6 +99,13 @@ export default function LoginPage() {
               className="text-zinc-400 hover:text-indigo-400 transition-colors"
             >
               Don&apos;t have an account? <span className="text-indigo-400 font-medium">Create Account</span>
+            </button>
+            <button
+              onClick={() => setCurrentPage('landing')}
+              className="text-zinc-500 hover:text-zinc-300 transition-colors mt-2 inline-flex items-center justify-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to Home
             </button>
           </div>
         </CardContent>
