@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import {
   Shield, TrafficCone, Car, Users, ChevronRight, Zap,
   Eye, Lock, BarChart3, ArrowRight, Github, Mail, Globe,
-  Menu, X, Star, Sparkles
+  Menu, X, Star, Sparkles, ExternalLink, GraduationCap, Code2, Heart
 } from 'lucide-react';
 
 /* ───────────── Animated Background Grid ───────────── */
@@ -93,7 +94,7 @@ function GlowCard({
 }: {
   children: React.ReactNode;
   className?: string;
-  glowColor?: 'indigo' | 'cyan' | 'violet' | 'emerald';
+  glowColor?: 'indigo' | 'cyan' | 'violet' | 'emerald' | 'rose';
 }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -104,6 +105,7 @@ function GlowCard({
     cyan: 'rgba(34,211,238,0.15)',
     violet: 'rgba(139,92,246,0.15)',
     emerald: 'rgba(52,211,153,0.15)',
+    rose: 'rgba(244,114,182,0.15)',
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -160,10 +162,12 @@ function AnimatedSection({
   children,
   className = '',
   delay = 0,
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  id?: string;
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -171,6 +175,7 @@ function AnimatedSection({
   return (
     <motion.section
       ref={ref}
+      id={id}
       className={className}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -257,8 +262,52 @@ const features = [
   },
 ];
 
-const developerRoles = [
-  { name: 'Jisun', role: 'Full Stack Developer', icon: '🧑‍💻' },
+/* ───────────── Developer Data ───────────── */
+const developers = [
+  {
+    name: 'Maruf Ahmed Jisun',
+    role: 'Full Stack Developer',
+    description: 'Lead developer who designed and built the entire Civitra system — from database architecture to the user interface, creating a complete citizen-police traffic management platform.',
+    image: '/dev-jisun.png',
+    github: 'https://github.com/jisundevelops',
+    isLead: true,
+    color: 'indigo' as const,
+    gradient: 'from-indigo-500/20 to-cyan-400/10',
+    borderHover: 'hover:border-indigo-500/30',
+  },
+  {
+    name: 'Jannatul Ferdousi Akhi',
+    role: 'Software Developer',
+    description: 'Contributed to system design and feature implementation, helping shape the core functionalities of the Civitra traffic management platform.',
+    image: '/dev-akhi.png',
+    github: '',
+    isLead: false,
+    color: 'cyan' as const,
+    gradient: 'from-cyan-500/20 to-teal-400/10',
+    borderHover: 'hover:border-cyan-500/30',
+  },
+  {
+    name: 'Imam Hossain',
+    role: 'Software Developer',
+    description: 'Played a key role in developing system features and ensuring the platform meets the needs of both citizens and traffic police departments.',
+    image: '/dev-imam.png',
+    github: '',
+    isLead: false,
+    color: 'violet' as const,
+    gradient: 'from-violet-500/20 to-purple-400/10',
+    borderHover: 'hover:border-violet-500/30',
+  },
+  {
+    name: 'Jasmin Akter',
+    role: 'Software Developer',
+    description: 'Helped bring the Civitra vision to life through collaborative development and testing, ensuring a seamless user experience across all roles.',
+    image: '/dev-jasmin.png',
+    github: '',
+    isLead: false,
+    color: 'emerald' as const,
+    gradient: 'from-emerald-500/20 to-green-400/10',
+    borderHover: 'hover:border-emerald-500/30',
+  },
 ];
 
 /* ═══════════════ MAIN LANDING PAGE ═══════════════ */
@@ -279,8 +328,8 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-              <Shield className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 overflow-hidden">
+              <Image src="/logo.png" alt="Civitra" width={36} height={36} className="object-contain" />
             </div>
             <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
               Civitra
@@ -347,29 +396,42 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             </span>
           </motion.div>
 
-          {/* Logo */}
+          {/* Logo Image */}
           <motion.div
             className="mx-auto mb-10 relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <div className="relative w-32 h-32 mx-auto">
+            <div className="relative w-36 h-36 sm:w-40 sm:h-40 mx-auto">
               {/* Glow ring */}
               <motion.div
                 className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/30 to-cyan-400/30 blur-xl"
-                animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+                animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               />
-              <div className="relative w-32 h-32 rounded-3xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-cyan-500 flex items-center justify-center shadow-2xl shadow-indigo-500/30 border border-white/10">
-                <Shield className="w-16 h-16 text-white drop-shadow-lg" />
+              <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/30">
+                <Image 
+                  src="/logo.png" 
+                  alt="Civitra Logo" 
+                  width={160} 
+                  height={160} 
+                  className="object-contain w-full h-full"
+                  priority
+                />
               </div>
-              {/* Orbiting dot */}
+              {/* Orbiting dots */}
               <motion.div
                 className="absolute w-3 h-3 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                 style={{ top: -6, left: '50%', originX: '0%', originY: '400%' }}
+              />
+              <motion.div
+                className="absolute w-2 h-2 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/50"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+                style={{ bottom: -4, right: '15%', originX: '0%', originY: '-500%' }}
               />
             </div>
           </motion.div>
@@ -472,7 +534,9 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             <p className="max-w-2xl mx-auto text-zinc-500 text-base sm:text-lg leading-relaxed">
               Civitra is a comprehensive web-based traffic violation management system
               designed to digitize and streamline the process of issuing, tracking, and
-              resolving traffic violations in Bangladesh.
+              resolving traffic violations in Bangladesh. Built as a university project at{' '}
+              <span className="text-indigo-400 font-medium">University of Information Technology and Sciences (UITS)</span>,
+              it bridges the gap between citizens and traffic authorities.
             </p>
           </div>
 
@@ -640,7 +704,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
 
       {/* ─── Developers Section ─── */}
       <AnimatedSection id="developers" className="relative py-24 sm:py-32">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-emerald-400 mb-4">
               The Team
@@ -650,59 +714,122 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 Meet the
               </span>{' '}
               <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Developer
+                Developers
               </span>
             </h2>
             <p className="max-w-xl mx-auto text-zinc-500 text-base">
-              Built with passion as part of the UITS Software Engineering Lab project.
+              Classmates and CSE students at{' '}
+              <span className="text-indigo-400 font-medium">University of Information Technology and Sciences (UITS)</span>,
+              united by a shared passion for building impactful software.
             </p>
           </div>
 
-          <div className="flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <GlowCard className="p-8 sm:p-10 max-w-md w-full text-center" glowColor="emerald">
-                {/* Avatar */}
-                <motion.div
-                  className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-cyan-400/20 border border-emerald-500/20 flex items-center justify-center"
-                  whileHover={{ rotate: 5, scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <span className="text-4xl">🧑‍💻</span>
-                </motion.div>
-                <h3 className="text-2xl font-bold text-white mb-1">Jisun</h3>
-                <p className="text-emerald-400 text-sm font-semibold mb-4">Full Stack Developer</p>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-6">
-                  Designed and developed the entire Civitra system — from database architecture
-                  to the user interface, building a complete citizen-police traffic management platform.
-                </p>
-                <div className="flex items-center justify-center gap-3">
-                  <motion.a
-                    href="https://github.com/jisundevelops"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 text-zinc-400 text-sm hover:text-white hover:border-white/20 hover:bg-white/5 transition-all"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <Github className="w-4 h-4" />
-                    GitHub
-                  </motion.a>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {developers.map((dev, i) => (
+              <motion.div
+                key={dev.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12 + 0.2 }}
+              >
+                <GlowCard className={`p-6 sm:p-7 text-center h-full bg-gradient-to-br ${dev.gradient} ${dev.borderHover} transition-colors group`} glowColor={dev.color}>
+                  {/* Lead badge */}
+                  {dev.isLead && (
+                    <motion.div
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/25 mb-4"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.12 + 0.6 }}
+                    >
+                      <Star className="w-3 h-3 text-indigo-400 fill-indigo-400" />
+                      <span className="text-[10px] font-semibold text-indigo-300 uppercase tracking-wider">Lead Dev</span>
+                    </motion.div>
+                  )}
+                  {!dev.isLead && <div className="mb-4 h-[26px]" />}
+
+                  {/* Avatar with image */}
                   <motion.div
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 text-zinc-400 text-sm"
-                    whileHover={{ scale: 1.05, y: -2 }}
+                    className={`w-24 h-24 mx-auto mb-5 rounded-2xl overflow-hidden border-2 ${
+                      dev.color === 'indigo' ? 'border-indigo-500/30' :
+                      dev.color === 'cyan' ? 'border-cyan-500/30' :
+                      dev.color === 'violet' ? 'border-violet-500/30' :
+                      'border-emerald-500/30'
+                    } bg-gradient-to-br ${dev.gradient}`}
+                    whileHover={{ rotate: 5, scale: 1.08 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
                   >
-                    <Globe className="w-4 h-4" />
-                    Developer
+                    <Image 
+                      src={dev.image} 
+                      alt={dev.name}
+                      width={96} 
+                      height={96} 
+                      className="w-full h-full object-cover"
+                    />
                   </motion.div>
-                </div>
-              </GlowCard>
-            </motion.div>
+
+                  {/* Name & Role */}
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-indigo-300 transition-colors">
+                    {dev.name}
+                  </h3>
+                  <p className={`text-xs font-semibold mb-3 ${
+                    dev.color === 'indigo' ? 'text-indigo-400' :
+                    dev.color === 'cyan' ? 'text-cyan-400' :
+                    dev.color === 'violet' ? 'text-violet-400' :
+                    'text-emerald-400'
+                  }`}>
+                    {dev.role}
+                  </p>
+                  <p className="text-zinc-500 text-xs leading-relaxed mb-4">
+                    {dev.description}
+                  </p>
+
+                  {/* Links */}
+                  <div className="flex items-center justify-center gap-2">
+                    {dev.github && (
+                      <motion.a
+                        href={dev.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 text-xs hover:text-white hover:border-white/20 hover:bg-white/5 transition-all"
+                        whileHover={{ scale: 1.08, y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        <Github className="w-3.5 h-3.5" />
+                        GitHub
+                        <ExternalLink className="w-3 h-3 opacity-50" />
+                      </motion.a>
+                    )}
+                    <motion.div
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-zinc-400 text-xs"
+                      whileHover={{ scale: 1.08, y: -2 }}
+                    >
+                      <GraduationCap className="w-3.5 h-3.5" />
+                      UITS
+                    </motion.div>
+                  </div>
+                </GlowCard>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Team motto */}
+          <motion.div
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+              <Heart className="w-4 h-4 text-rose-400" />
+              <span className="text-sm text-zinc-400">
+                Built with passion as part of the <span className="text-white font-medium">UITS Software Engineering Lab</span> project
+              </span>
+              <Heart className="w-4 h-4 text-rose-400" />
+            </div>
+          </motion.div>
         </div>
       </AnimatedSection>
 
@@ -711,11 +838,11 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <GlowCard className="p-10 sm:p-16" glowColor="indigo">
             <motion.div
-              className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-xl shadow-indigo-500/30"
-              whileHover={{ rotate: 180 }}
+              className="w-16 h-16 mx-auto mb-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl shadow-indigo-500/30"
+              whileHover={{ rotate: 180, scale: 1.1 }}
               transition={{ duration: 0.6 }}
             >
-              <Shield className="w-8 h-8 text-white" />
+              <Image src="/logo.png" alt="Civitra" width={64} height={64} className="object-contain w-full h-full" />
             </motion.div>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Ready to Experience the Future?
@@ -742,8 +869,8 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       <footer className="relative border-t border-white/[0.04] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center">
-              <Shield className="w-3.5 h-3.5 text-white" />
+            <div className="w-6 h-6 rounded overflow-hidden bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center">
+              <Image src="/logo.png" alt="Civitra" width={24} height={24} className="object-contain" />
             </div>
             <span className="text-sm text-zinc-500">
               Civitra © {new Date().getFullYear()} — UITS Software Engineering Lab
