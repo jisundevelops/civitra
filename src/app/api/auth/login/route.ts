@@ -17,7 +17,18 @@ export async function POST(request: Request) {
 
     const sanitizedEmail = sanitizeString(email).toLowerCase();
 
-    const user = await db.user.findUnique({ where: { email: sanitizedEmail } });
+    // Test database connection first
+    let user;
+    try {
+      user = await db.user.findUnique({ where: { email: sanitizedEmail } });
+    } catch (dbError) {
+      console.error("Database query error during login:", dbError);
+      return NextResponse.json(
+        { error: "Service temporarily unavailable. Please try again in a moment." },
+        { status: 503 }
+      );
+    }
+
     if (!user) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
@@ -62,7 +73,8 @@ export async function POST(request: Request) {
         name: user.name,
         email: user.email,
         role: user.role,
-        citizenId: user.citizenId,
+        citizenId: user.citizenId || null,
+        phone: user.phone || null,
       },
     });
   } catch (error) {
