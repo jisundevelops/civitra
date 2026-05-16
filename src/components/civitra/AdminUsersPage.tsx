@@ -5,12 +5,10 @@ import { api } from '@/lib/api';
 import type { User } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
-import { Search, Plus, Users, Shield, X, UserCheck, UserX } from 'lucide-react';
+import { Search, Users, UserCheck, UserX } from 'lucide-react';
 import { toast } from 'sonner';
 
 function RoleBadge({ role }: { role: string }) {
@@ -26,18 +24,11 @@ function RoleBadge({ role }: { role: string }) {
   );
 }
 
-interface AdminUsersPageProps {
-  autoOpenAddForm?: boolean;
-}
-
-export default function AdminUsersPage({ autoOpenAddForm }: AdminUsersPageProps = {}) {
+export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [showAddForm, setShowAddForm] = useState(autoOpenAddForm || false);
-  const [addForm, setAddForm] = useState({ name: '', email: '', password: '', phone: '' });
-  const [addLoading, setAddLoading] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -68,27 +59,6 @@ export default function AdminUsersPage({ autoOpenAddForm }: AdminUsersPageProps 
     setSearchTimeout(timeout);
   };
 
-  const handleAddOfficer = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!addForm.name || !addForm.email || !addForm.password) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
-    setAddLoading(true);
-    try {
-      await api.createOfficer(addForm);
-      toast.success('Officer created successfully');
-      setAddForm({ name: '', email: '', password: '', phone: '' });
-      setShowAddForm(false);
-      loadUsers(search);
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to create officer';
-      toast.error(message);
-    } finally {
-      setAddLoading(false);
-    }
-  };
-
   const handleToggleActive = async (user: User) => {
     try {
       await api.updateUser(user.id, { isActive: !user.isActive });
@@ -102,75 +72,12 @@ export default function AdminUsersPage({ autoOpenAddForm }: AdminUsersPageProps 
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="h-10 w-10 rounded-lg bg-[var(--c-accent-bg)] border border-[var(--c-accent-border)] flex items-center justify-center">
+          <Users className="h-5 w-5 text-[var(--c-accent-text)]" />
+        </div>
         <h2 className="text-xl font-bold text-[var(--c-text)]">Users</h2>
-        <Button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white"
-        >
-          {showAddForm ? <X className="h-4 w-4 mr-1" /> : <Plus className="h-4 w-4 mr-1" />}
-          {showAddForm ? 'Cancel' : 'Add Officer'}
-        </Button>
       </div>
-
-      {/* Add Officer Form */}
-      {showAddForm && (
-        <Card className="bg-[var(--c-card)] border-[var(--c-accent-border)]">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base text-[var(--c-text)] flex items-center gap-2">
-              <Shield className="h-4 w-4 text-cyan-400" />
-              Add New Officer
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleAddOfficer} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <Label className="text-[var(--c-text)] text-xs">Name *</Label>
-                <Input
-                  value={addForm.name}
-                  onChange={(e) => setAddForm({ ...addForm, name: e.target.value })}
-                  placeholder="Full Name"
-                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-[var(--c-text)] text-xs">Email *</Label>
-                <Input
-                  type="email"
-                  value={addForm.email}
-                  onChange={(e) => setAddForm({ ...addForm, email: e.target.value })}
-                  placeholder="Email"
-                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-[var(--c-text)] text-xs">Password *</Label>
-                <Input
-                  type="password"
-                  value={addForm.password}
-                  onChange={(e) => setAddForm({ ...addForm, password: e.target.value })}
-                  placeholder="Min 6 characters"
-                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-[var(--c-text)] text-xs">Phone</Label>
-                <Input
-                  value={addForm.phone}
-                  onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })}
-                  placeholder="+880..."
-                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <Button type="submit" disabled={addLoading} className="bg-cyan-600 hover:bg-cyan-700 text-white">
-                  {addLoading ? 'Creating...' : 'Create Officer'}
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
