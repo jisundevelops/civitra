@@ -57,10 +57,17 @@ class ApiClient {
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
-    const data = await res.json();
+
+    let data: Record<string, unknown>;
+    try {
+      const text = await res.text();
+      data = text ? JSON.parse(text) : {};
+    } catch {
+      throw new Error(`Server error (${res.status}). Please try again.`);
+    }
 
     if (!res.ok) {
-      throw new Error(data.message || data.error || 'Request failed');
+      throw new Error((data.message as string) || (data.error as string) || 'Request failed');
     }
     return data as T;
   }

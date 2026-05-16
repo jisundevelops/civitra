@@ -118,7 +118,7 @@ export default function AdminUsersPage() {
                   <tr className="border-b border-[var(--c-border)]">
                     <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Name</th>
                     <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Email</th>
-                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Phone</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Citizen ID</th>
                     <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Role</th>
                     <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Status</th>
                     <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Joined</th>
@@ -130,7 +130,11 @@ export default function AdminUsersPage() {
                     <tr key={u.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4 text-[var(--c-text)] font-medium">{u.name}</td>
                       <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs">{u.email}</td>
-                      <td className="py-3 px-4 text-[var(--c-text-muted)]">{u.phone || '—'}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)] font-mono text-xs">
+                        {u.citizenId ? (
+                          <span className="text-[var(--c-accent-text)]">{u.citizenId}</span>
+                        ) : '—'}
+                      </td>
                       <td className="py-3 px-4"><RoleBadge role={u.role} /></td>
                       <td className="py-3 px-4">
                         <span className={`inline-flex items-center gap-1 text-xs font-medium ${u.isActive ? 'text-emerald-400' : 'text-red-400'}`}>

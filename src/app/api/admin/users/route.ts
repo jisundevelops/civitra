@@ -45,6 +45,7 @@ export async function GET(request: Request) {
         email: true,
         phone: true,
         nid: true,
+        citizenId: true,
         role: true,
         isActive: true,
         createdAt: true,
