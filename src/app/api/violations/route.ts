@@ -22,6 +22,11 @@ export async function GET(request: Request) {
 
   const where: Record<string, unknown> = {};
 
+  // Police can only see their own violations; admin sees all
+  if (user.role === "police") {
+    where.officerId = user.id;
+  }
+
   if (status && ["pending", "paid", "cancelled"].includes(status)) {
     where.status = status;
   }

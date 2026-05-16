@@ -30,6 +30,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
   }
 
+  // Generate citizenId for citizens who don't have one yet (legacy users)
+  if (user.role === "citizen" && !user.citizenId) {
+    const year = new Date().getFullYear();
+    const random = Math.floor(1000 + Math.random() * 9000);
+    const citizenId = `CIV-${year}-${random}`;
+    await db.user.update({
+      where: { id: user.id },
+      data: { citizenId },
+    });
+    user.citizenId = citizenId;
+  }
+
   const token = generateToken({
     id: user.id,
     email: user.email,
@@ -44,6 +56,7 @@ export async function POST(request: Request) {
       name: user.name,
       email: user.email,
       role: user.role,
+      citizenId: user.citizenId,
     },
   });
 }

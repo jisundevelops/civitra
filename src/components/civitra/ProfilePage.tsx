@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
-import { User as UserIcon, Mail, Phone, CreditCard, Car, Calendar, Pencil, Save, X } from 'lucide-react';
+import { User as UserIcon, Mail, Phone, CreditCard, Car, Calendar, Pencil, Save, X, Plus, Trash2, Hash } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function ProfilePage() {
@@ -21,6 +21,12 @@ export default function ProfilePage() {
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({ name: '', phone: '', nid: '' });
   const [saving, setSaving] = useState(false);
+
+  // Add vehicle state
+  const [showAddVehicle, setShowAddVehicle] = useState(false);
+  const [newVehicleReg, setNewVehicleReg] = useState('');
+  const [newVehicleType, setNewVehicleType] = useState('');
+  const [addingVehicle, setAddingVehicle] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -56,6 +62,41 @@ export default function ProfilePage() {
       toast.error(message);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleAddVehicle = async () => {
+    if (!newVehicleReg.trim()) {
+      toast.error('Please enter a vehicle registration number');
+      return;
+    }
+    setAddingVehicle(true);
+    try {
+      await api.addVehicle({
+        registration_number: newVehicleReg.trim(),
+        vehicle_type: newVehicleType.trim() || undefined,
+      });
+      toast.success('Vehicle added successfully');
+      setNewVehicleReg('');
+      setNewVehicleType('');
+      setShowAddVehicle(false);
+      loadProfile();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to add vehicle';
+      toast.error(message);
+    } finally {
+      setAddingVehicle(false);
+    }
+  };
+
+  const handleRemoveVehicle = async (vehicleId: string) => {
+    try {
+      await api.removeVehicle(vehicleId);
+      toast.success('Vehicle removed successfully');
+      loadProfile();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to remove vehicle';
+      toast.error(message);
     }
   };
 
@@ -164,6 +205,16 @@ export default function ProfilePage() {
               </>
             ) : (
               <>
+                {/* Citizen ID - prominent display */}
+                {displayUser?.citizenId && (
+                  <div className="flex items-center gap-3 py-2 px-3 rounded-lg bg-[var(--c-accent-bg)] border border-[var(--c-accent-border)]">
+                    <Hash className="h-4 w-4 text-[var(--c-accent-text)] shrink-0" />
+                    <div>
+                      <p className="text-xs text-[var(--c-accent-text)]">Citizen ID</p>
+                      <p className="text-sm text-[var(--c-accent-text)] font-mono font-bold">{displayUser.citizenId}</p>
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center gap-3 py-2">
                   <Mail className="h-4 w-4 text-[var(--c-text-subtle)]" />
                   <div>
@@ -201,12 +252,66 @@ export default function ProfilePage() {
       {/* Vehicles Section */}
       <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold text-[var(--c-text)] flex items-center gap-2">
-            <Car className="h-4 w-4 text-cyan-400" />
-            Registered Vehicles
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base font-semibold text-[var(--c-text)] flex items-center gap-2">
+              <Car className="h-4 w-4 text-cyan-400" />
+              Registered Vehicles ({vehicles.length})
+            </CardTitle>
+            {user?.role === 'citizen' && (
+              <Button
+                onClick={() => setShowAddVehicle(!showAddVehicle)}
+                variant="ghost"
+                size="sm"
+                className="text-[var(--c-text-muted)] hover:text-cyan-400 hover:bg-cyan-500/10"
+              >
+                {showAddVehicle ? <X className="h-4 w-4 mr-1" /> : <Plus className="h-4 w-4 mr-1" />}
+                {showAddVehicle ? 'Cancel' : 'Add Vehicle'}
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
+          {/* Add Vehicle Form */}
+          {showAddVehicle && (
+            <div className="mb-4 p-4 rounded-lg bg-[var(--c-bg)] border border-[var(--c-accent-border)] space-y-3">
+              <div className="space-y-2">
+                <Label className="text-[var(--c-text)] text-sm">Registration Number *</Label>
+                <Input
+                  value={newVehicleReg}
+                  onChange={(e) => setNewVehicleReg(e.target.value)}
+                  placeholder="e.g., DHK-1234"
+                  className="bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[var(--c-text)] text-sm">Vehicle Type</Label>
+                <Input
+                  value={newVehicleType}
+                  onChange={(e) => setNewVehicleType(e.target.value)}
+                  placeholder="e.g., Car, Motorcycle, Truck"
+                  className="bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)]"
+                />
+              </div>
+              <Button
+                onClick={handleAddVehicle}
+                disabled={addingVehicle}
+                className="bg-cyan-600 hover:bg-cyan-700 text-white"
+              >
+                {addingVehicle ? (
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Adding...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Car className="h-4 w-4" />
+                    Add Vehicle
+                  </span>
+                )}
+              </Button>
+            </div>
+          )}
+
           {vehicles.length === 0 ? (
             <p className="text-[var(--c-text-subtle)] text-sm py-4 text-center">No vehicles registered</p>
           ) : (
@@ -217,9 +322,21 @@ export default function ProfilePage() {
                     <Car className="h-4 w-4 text-[var(--c-text-subtle)]" />
                     <span className="text-[var(--c-text)] font-mono text-sm">{v.registrationNumber}</span>
                   </div>
-                  {v.vehicleType && (
-                    <span className="text-[var(--c-text-muted)] text-xs">{v.vehicleType}</span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {v.vehicleType && (
+                      <span className="text-[var(--c-text-muted)] text-xs">{v.vehicleType}</span>
+                    )}
+                    {user?.role === 'citizen' && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleRemoveVehicle(v.id)}
+                        className="h-7 w-7 text-[var(--c-text-subtle)] hover:text-red-400 hover:bg-red-500/10"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

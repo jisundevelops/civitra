@@ -58,6 +58,16 @@ export async function POST(request: Request) {
     },
   });
 
+  // Generate citizenId for citizens
+  const year = new Date().getFullYear();
+  const random = Math.floor(1000 + Math.random() * 9000);
+  const citizenId = `CIV-${year}-${random}`;
+
+  await db.user.update({
+    where: { id: user.id },
+    data: { citizenId },
+  });
+
   // If vehicle_number provided, create vehicle linked to user
   if (vehicle_number) {
     const existingVehicle = await db.vehicle.findUnique({
@@ -82,5 +92,5 @@ export async function POST(request: Request) {
     }
   }
 
-  return NextResponse.json({ message: "Registered successfully" }, { status: 201 });
+  return NextResponse.json({ message: "Registered successfully", citizenId }, { status: 201 });
 }

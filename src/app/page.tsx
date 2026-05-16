@@ -16,6 +16,7 @@ import PaymentHistoryPage from '@/components/civitra/PaymentHistoryPage';
 import IssueTicketPage from '@/components/civitra/IssueTicketPage';
 import AdminUsersPage from '@/components/civitra/AdminUsersPage';
 import AddOfficerPage from '@/components/civitra/AddOfficerPage';
+import CheckCitizenPage from '@/components/civitra/CheckCitizenPage';
 import ReportsPage from '@/components/civitra/ReportsPage';
 import ViolationTypesPage from '@/components/civitra/ViolationTypesPage';
 import ProfilePage from '@/components/civitra/ProfilePage';
@@ -69,6 +70,8 @@ function AppContent() {
         return <AdminUsersPage />;
       case 'add-officer':
         return <AddOfficerPage />;
+      case 'check-citizen':
+        return <CheckCitizenPage />;
       case 'reports':
         return <ReportsPage />;
       case 'violation-types':

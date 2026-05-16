@@ -5,6 +5,7 @@ export interface User {
   role: 'citizen' | 'police' | 'admin';
   phone?: string;
   nid?: string;
+  citizenId?: string;
   isActive: boolean;
   createdAt: string;
 }
@@ -93,4 +94,5 @@ export type PageName =
   | 'reports'
   | 'violation-types'
   | 'add-officer'
+  | 'check-citizen'
   | 'profile';

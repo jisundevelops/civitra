@@ -14,6 +14,7 @@ model User {
   password  String
   phone     String?
   nid       String?
+  citizenId String?  @unique   // Unique citizen ID (e.g., CIV-2024-XXXX)
   role      String   @default("citizen") // citizen, police, admin
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())

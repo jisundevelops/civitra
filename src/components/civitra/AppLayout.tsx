@@ -16,6 +16,7 @@ const pageTitles: Record<string, string> = {
   'issue-ticket': 'Issue Ticket',
   'admin-users': 'Users',
   'add-officer': 'Add Officer',
+  'check-citizen': 'Check Citizen',
   reports: 'Reports',
   'violation-types': 'Violation Types',
   profile: 'My Profile',

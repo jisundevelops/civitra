@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
 import type { Violation } from '@/types';
 import UpdateViolationDialog from './UpdateViolationDialog';
@@ -25,6 +26,7 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function AllViolationsPage() {
+  const { user } = useAuth();
   const [violations, setViolations] = useState<Violation[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -74,7 +76,9 @@ export default function AllViolationsPage() {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <h2 className="text-xl font-bold text-[var(--c-text)]">All Violations</h2>
+      <h2 className="text-xl font-bold text-[var(--c-text)]">
+        {user?.role === 'police' ? 'My Issued Tickets' : 'All Violations'}
+      </h2>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">

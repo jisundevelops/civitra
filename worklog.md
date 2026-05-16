@@ -89,6 +89,30 @@ Stage Summary:
 - Note: local dev uses SQLite (provider temporarily switched for db:push); production uses PostgreSQL via Neon
 
 ---
+Task ID: 2-backend
+Agent: Backend Agent
+Task: Backend API changes — police violation scoping, citizenId generation, citizen lookup, vehicle management
+
+Work Log:
+- Fixed violations GET handler: police now only see their own violations (where.officerId = user.id), admin still sees all
+- Added citizenId generation on registration: format CIV-YYYY-XXXX (year + random 4 digits), only for citizens
+- Updated register response to include citizenId in the JSON
+- Updated login response to include citizenId in user object
+- Updated profile GET and PUT handlers to include citizenId in select fields
+- Created /api/citizens route: police/admin can look up a citizen by citizenId query param, returns citizen info + vehicles + violations
+- Created /api/vehicles route: POST (add vehicle to account with duplicate/ownership checks), DELETE (remove vehicle if no violations)
+- Verified admin create-officer route does NOT assign citizenId (no change needed — it creates role "police" without citizenId)
+- All lint checks pass
+
+Stage Summary:
+- Police officers are now properly scoped to only their own violations in the GET /api/violations endpoint
+- Citizens receive a unique citizenId (CIV-YYYY-XXXX) upon registration
+- citizenId is returned in login, profile, and registration responses
+- New /api/citizens endpoint enables police/admin citizen lookup by citizenId
+- New /api/vehicles endpoint enables citizens to manage their vehicles (add/delete)
+- No citizenId is assigned to police/admin accounts
+
+---
 Task ID: 4
 Agent: Main Agent
 Task: Finalize Vercel deployment preparation - fix local dev compatibility, create deployment guide, test all changes

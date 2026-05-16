@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import type { PageName } from '@/types';
 import {
   Home, AlertTriangle, CreditCard, History, User, Plus,
-  Users, BarChart3, LogOut, FileText, Shield, Car, X,
+  Users, BarChart3, LogOut, FileText, Shield, Car, X, Search,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -30,7 +30,8 @@ const citizenNav: NavItem[] = [
 const policeNav: NavItem[] = [
   { label: 'Dashboard', page: 'dashboard', icon: <Home className="h-4 w-4" /> },
   { label: 'Issue Ticket', page: 'issue-ticket', icon: <Plus className="h-4 w-4" /> },
-  { label: 'All Violations', page: 'all-violations', icon: <FileText className="h-4 w-4" /> },
+  { label: 'My Tickets', page: 'all-violations', icon: <FileText className="h-4 w-4" /> },
+  { label: 'Check Citizen', page: 'check-citizen', icon: <Search className="h-4 w-4" /> },
 ];
 
 const adminNav: NavItem[] = [
@@ -38,6 +39,7 @@ const adminNav: NavItem[] = [
   { label: 'Users', page: 'admin-users', icon: <Users className="h-4 w-4" /> },
   { label: 'All Violations', page: 'all-violations', icon: <FileText className="h-4 w-4" /> },
   { label: 'Add Officer', page: 'add-officer', icon: <Shield className="h-4 w-4" /> },
+  { label: 'Check Citizen', page: 'check-citizen', icon: <Search className="h-4 w-4" /> },
   { label: 'Reports', page: 'reports', icon: <BarChart3 className="h-4 w-4" /> },
   { label: 'Violation Types', page: 'violation-types', icon: <Car className="h-4 w-4" /> },
 ];

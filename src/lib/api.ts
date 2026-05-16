@@ -209,6 +209,32 @@ class ApiClient {
   async updateProfile(data: { name?: string; phone?: string; nid?: string }) {
     return this.request('/profile', { method: 'PUT', body: JSON.stringify(data) });
   }
+
+  // Citizens (Check Citizen - police/admin)
+  async checkCitizen(citizenId: string): Promise<{
+    citizen: User & { vehicles?: Vehicle[] };
+    violations: Array<{
+      id: string;
+      registrationNumber: string;
+      violationTypeName: string;
+      fineAmount: number;
+      status: string;
+      location?: string;
+      dateTime: string;
+      officerName: string;
+    }>;
+  }> {
+    return this.request(`/citizens?citizenId=${encodeURIComponent(citizenId)}`);
+  }
+
+  // Vehicles (add/remove)
+  async addVehicle(data: { registration_number: string; vehicle_type?: string }) {
+    return this.request('/vehicles', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async removeVehicle(vehicleId: string) {
+    return this.request(`/vehicles?id=${encodeURIComponent(vehicleId)}`, { method: 'DELETE' });
+  }
 }
 
 export const api = new ApiClient();
