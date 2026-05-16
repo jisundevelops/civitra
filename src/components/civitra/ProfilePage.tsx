@@ -31,7 +31,7 @@ export default function ProfilePage() {
     try {
       const data = await api.getProfile();
       setProfile(data.user);
-      setVehicles(data.vehicles || []);
+      setVehicles(data.user.vehicles || data.vehicles || []);
       setEditForm({
         name: data.user.name,
         phone: data.user.phone || '',

@@ -202,7 +202,7 @@ class ApiClient {
   }
 
   // Profile
-  async getProfile(): Promise<{ user: User; vehicles: Vehicle[] }> {
+  async getProfile(): Promise<{ user: User & { vehicles?: Vehicle[] }; vehicles?: Vehicle[] }> {
     return this.request('/profile');
   }
 
