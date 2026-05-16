@@ -42,16 +42,16 @@ export default function ReportsPage() {
   if (loading) {
     return (
       <div className="space-y-6 animate-fadeIn">
-        <h2 className="text-xl font-bold text-white">Reports</h2>
+        <h2 className="text-xl font-bold text-[var(--c-text)]">Reports</h2>
         <div className="flex gap-3">
-          <Skeleton className="h-10 w-36 bg-[#16161f]" />
-          <Skeleton className="h-10 w-44 bg-[#16161f]" />
+          <Skeleton className="h-10 w-36 bg-[var(--c-card)]" />
+          <Skeleton className="h-10 w-44 bg-[var(--c-card)]" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Skeleton className="h-28 bg-[#16161f]" />
-          <Skeleton className="h-28 bg-[#16161f]" />
+          <Skeleton className="h-28 bg-[var(--c-card)]" />
+          <Skeleton className="h-28 bg-[var(--c-card)]" />
         </div>
-        <Skeleton className="h-64 bg-[#16161f]" />
+        <Skeleton className="h-64 bg-[var(--c-card)]" />
       </div>
     );
   }
@@ -64,15 +64,15 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <h2 className="text-xl font-bold text-white">Reports</h2>
+      <h2 className="text-xl font-bold text-[var(--c-text)]">Reports</h2>
 
       {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3">
         <Select value={period} onValueChange={setPeriod}>
-          <SelectTrigger className="w-full sm:w-36 bg-[#16161f] border-zinc-700 text-zinc-200">
+          <SelectTrigger className="w-full sm:w-36 bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)]">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-[#16161f] border-zinc-700">
+          <SelectContent className="bg-[var(--c-card)] border-[var(--c-input-border)]">
             <SelectItem value="daily">Daily</SelectItem>
             <SelectItem value="weekly">Weekly</SelectItem>
             <SelectItem value="monthly">Monthly</SelectItem>
@@ -82,18 +82,18 @@ export default function ReportsPage() {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="w-full sm:w-44 bg-[#16161f] border-zinc-700 text-zinc-200"
+          className="w-full sm:w-44 bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)]"
         />
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-zinc-400 mb-1">Total Violations</p>
-                <p className="text-2xl font-bold text-white">{report?.totalViolations || 0}</p>
+                <p className="text-sm text-[var(--c-text-muted)] mb-1">Total Violations</p>
+                <p className="text-2xl font-bold text-[var(--c-text)]">{report?.totalViolations || 0}</p>
               </div>
               <div className="h-11 w-11 rounded-lg bg-amber-500/15 flex items-center justify-center">
                 <AlertTriangle className="h-5 w-5 text-amber-400" />
@@ -101,12 +101,12 @@ export default function ReportsPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-zinc-400 mb-1">Total Revenue</p>
-                <p className="text-2xl font-bold text-white">৳{report?.totalRevenue.toLocaleString() || 0}</p>
+                <p className="text-sm text-[var(--c-text-muted)] mb-1">Total Revenue</p>
+                <p className="text-2xl font-bold text-[var(--c-text)]">৳{report?.totalRevenue.toLocaleString() || 0}</p>
               </div>
               <div className="h-11 w-11 rounded-lg bg-emerald-500/15 flex items-center justify-center">
                 <TrendingUp className="h-5 w-5 text-emerald-400" />
@@ -118,10 +118,10 @@ export default function ReportsPage() {
 
       {/* Chart */}
       {chartData.length > 0 && (
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-zinc-200 flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-indigo-400" />
+            <CardTitle className="text-base font-semibold text-[var(--c-text)] flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-[var(--c-accent-text)]" />
               Violations by Type
             </CardTitle>
           </CardHeader>
@@ -159,32 +159,32 @@ export default function ReportsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Status Breakdown */}
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-zinc-200">Status Breakdown</CardTitle>
+            <CardTitle className="text-base font-semibold text-[var(--c-text)]">Status Breakdown</CardTitle>
           </CardHeader>
           <CardContent>
             {report?.byStatus && report.byStatus.length > 0 ? (
               <div className="space-y-3">
                 {report.byStatus.map((item) => (
                   <div key={item.status} className="flex items-center justify-between">
-                    <span className="text-sm text-zinc-300 capitalize">{item.status}</span>
-                    <span className={`text-sm font-semibold ${statusColors[item.status] || 'text-zinc-400'}`}>
+                    <span className="text-sm text-[var(--c-text)] capitalize">{item.status}</span>
+                    <span className={`text-sm font-semibold ${statusColors[item.status] || 'text-[var(--c-text-muted)]'}`}>
                       {item.count}
                     </span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-zinc-500 text-sm">No data available</p>
+              <p className="text-[var(--c-text-subtle)] text-sm">No data available</p>
             )}
           </CardContent>
         </Card>
 
         {/* Top Locations */}
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold text-zinc-200 flex items-center gap-2">
+            <CardTitle className="text-base font-semibold text-[var(--c-text)] flex items-center gap-2">
               <MapPin className="h-4 w-4 text-amber-400" />
               Top Locations
             </CardTitle>
@@ -194,13 +194,13 @@ export default function ReportsPage() {
               <div className="space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
                 {report.topLocations.map((item, i) => (
                   <div key={i} className="flex items-center justify-between">
-                    <span className="text-sm text-zinc-300 truncate mr-3">{item.location}</span>
-                    <span className="text-sm font-semibold text-zinc-200 shrink-0">{item.count}</span>
+                    <span className="text-sm text-[var(--c-text)] truncate mr-3">{item.location}</span>
+                    <span className="text-sm font-semibold text-[var(--c-text)] shrink-0">{item.count}</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-zinc-500 text-sm">No data available</p>
+              <p className="text-[var(--c-text-subtle)] text-sm">No data available</p>
             )}
           </CardContent>
         </Card>

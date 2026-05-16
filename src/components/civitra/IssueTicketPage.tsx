@@ -70,15 +70,15 @@ export default function IssueTicketPage() {
 
   return (
     <div className="max-w-xl mx-auto animate-fadeIn">
-      <Card className="bg-[#16161f] border-zinc-800/50 shadow-xl">
+      <Card className="bg-[var(--c-card)] border-[var(--c-border)] shadow-xl">
         <CardHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-10 w-10 rounded-lg bg-cyan-500/15 flex items-center justify-center">
               <FileText className="h-5 w-5 text-cyan-400" />
             </div>
             <div>
-              <CardTitle className="text-lg text-white">Issue Traffic Ticket</CardTitle>
-              <CardDescription className="text-zinc-400">Create a new traffic violation record</CardDescription>
+              <CardTitle className="text-lg text-[var(--c-text)]">Issue Traffic Ticket</CardTitle>
+              <CardDescription className="text-[var(--c-text-muted)]">Create a new traffic violation record</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -91,49 +91,49 @@ export default function IssueTicketPage() {
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label className="text-zinc-300 text-sm">Vehicle Registration Number *</Label>
+              <Label className="text-[var(--c-text)] text-sm">Vehicle Registration Number *</Label>
               <Input
                 placeholder="DHA-1234"
                 value={form.registration_number}
                 onChange={(e) => update('registration_number', e.target.value.toUpperCase())}
-                className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 font-mono"
+                className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] font-mono"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-zinc-300 text-sm">Violation Type *</Label>
+              <Label className="text-[var(--c-text)] text-sm">Violation Type *</Label>
               <Select value={form.violation_type_id} onValueChange={(value) => update('violation_type_id', value)}>
-                <SelectTrigger className="bg-[#0a0a0f] border-zinc-700 text-zinc-200">
+                <SelectTrigger className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)]">
                   <SelectValue placeholder="Select violation type" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#16161f] border-zinc-700">
+                <SelectContent className="bg-[var(--c-card)] border-[var(--c-input-border)]">
                   {violationTypes.map((vt) => (
-                    <SelectItem key={vt.id} value={vt.id} className="text-zinc-200">
+                    <SelectItem key={vt.id} value={vt.id} className="text-[var(--c-text)]">
                       {vt.name} — ৳{vt.fineAmount.toLocaleString()}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               {selectedType && (
-                <p className="text-xs text-zinc-500">Fine: ৳{selectedType.fineAmount.toLocaleString()}</p>
+                <p className="text-xs text-[var(--c-text-subtle)]">Fine: ৳{selectedType.fineAmount.toLocaleString()}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label className="text-zinc-300 text-sm">Location *</Label>
+              <Label className="text-[var(--c-text)] text-sm">Location *</Label>
               <Input
                 placeholder="Intersection, Road name, Area"
                 value={form.location}
                 onChange={(e) => update('location', e.target.value)}
-                className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600"
+                className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)]"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-zinc-300 text-sm">Notes (Optional)</Label>
+              <Label className="text-[var(--c-text)] text-sm">Notes (Optional)</Label>
               <Textarea
                 placeholder="Additional details about the violation..."
                 value={form.notes}
                 onChange={(e) => update('notes', e.target.value)}
                 rows={3}
-                className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 resize-none"
+                className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] resize-none"
               />
             </div>
             <Button

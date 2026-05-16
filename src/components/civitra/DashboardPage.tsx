@@ -24,12 +24,12 @@ function StatusBadge({ status }: { status: string }) {
 
 function StatCard({ title, value, icon, color }: { title: string; value: string | number; icon: React.ReactNode; color: string }) {
   return (
-    <Card className="bg-[#16161f] border-zinc-800/50 hover:border-zinc-700/50 transition-colors">
+    <Card className="bg-[var(--c-card)] border-[var(--c-border)] hover:border-[var(--c-input-border)] transition-colors">
       <CardContent className="p-5">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-zinc-400 mb-1">{title}</p>
-            <p className="text-2xl font-bold text-white">{value}</p>
+            <p className="text-sm text-[var(--c-text-muted)] mb-1">{title}</p>
+            <p className="text-2xl font-bold text-[var(--c-text)]">{value}</p>
           </div>
           <div className={`h-11 w-11 rounded-lg flex items-center justify-center ${color}`}>
             {icon}
@@ -43,7 +43,7 @@ function StatCard({ title, value, icon, color }: { title: string; value: string 
 function RecentViolationsTable({ violations }: { violations: Violation[] }) {
   if (violations.length === 0) {
     return (
-      <div className="text-center py-8 text-zinc-500">
+      <div className="text-center py-8 text-[var(--c-text-subtle)]">
         No recent violations found
       </div>
     );
@@ -53,22 +53,22 @@ function RecentViolationsTable({ violations }: { violations: Violation[] }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800">
-            <th className="text-left py-3 px-2 text-zinc-400 font-medium">Vehicle</th>
-            <th className="text-left py-3 px-2 text-zinc-400 font-medium">Violation</th>
-            <th className="text-left py-3 px-2 text-zinc-400 font-medium">Fine</th>
-            <th className="text-left py-3 px-2 text-zinc-400 font-medium">Status</th>
-            <th className="text-left py-3 px-2 text-zinc-400 font-medium">Date</th>
+          <tr className="border-b border-[var(--c-border)]">
+            <th className="text-left py-3 px-2 text-[var(--c-text-muted)] font-medium">Vehicle</th>
+            <th className="text-left py-3 px-2 text-[var(--c-text-muted)] font-medium">Violation</th>
+            <th className="text-left py-3 px-2 text-[var(--c-text-muted)] font-medium">Fine</th>
+            <th className="text-left py-3 px-2 text-[var(--c-text-muted)] font-medium">Status</th>
+            <th className="text-left py-3 px-2 text-[var(--c-text-muted)] font-medium">Date</th>
           </tr>
         </thead>
         <tbody>
           {violations.map((v) => (
-            <tr key={v.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/20 transition-colors">
-              <td className="py-3 px-2 text-zinc-200 font-mono text-xs">{v.registrationNumber || '—'}</td>
-              <td className="py-3 px-2 text-zinc-300">{v.violationTypeName || '—'}</td>
-              <td className="py-3 px-2 text-zinc-200 font-medium">৳{v.fineAmount.toLocaleString()}</td>
+            <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+              <td className="py-3 px-2 text-[var(--c-text)] font-mono text-xs">{v.registrationNumber || '—'}</td>
+              <td className="py-3 px-2 text-[var(--c-text)]">{v.violationTypeName || '—'}</td>
+              <td className="py-3 px-2 text-[var(--c-text)] font-medium">৳{v.fineAmount.toLocaleString()}</td>
               <td className="py-3 px-2"><StatusBadge status={v.status} /></td>
-              <td className="py-3 px-2 text-zinc-400 text-xs">{new Date(v.dateTime).toLocaleDateString()}</td>
+              <td className="py-3 px-2 text-[var(--c-text-muted)] text-xs">{new Date(v.dateTime).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>
@@ -127,13 +127,13 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <Skeleton className="h-8 w-64 bg-[#16161f]" />
+        <Skeleton className="h-8 w-64 bg-[var(--c-card)]" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-28 bg-[#16161f]" />
+            <Skeleton key={i} className="h-28 bg-[var(--c-card)]" />
           ))}
         </div>
-        <Skeleton className="h-64 bg-[#16161f]" />
+        <Skeleton className="h-64 bg-[var(--c-card)]" />
       </div>
     );
   }
@@ -143,7 +143,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <h2 className="text-xl font-bold text-white">{greeting}</h2>
+      <h2 className="text-xl font-bold text-[var(--c-text)]">{greeting}</h2>
 
       {user?.role === 'admin' && stats && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -170,9 +170,9 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <Card className="bg-[#16161f] border-zinc-800/50">
+      <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold text-zinc-200">Recent Violations</CardTitle>
+          <CardTitle className="text-base font-semibold text-[var(--c-text)]">Recent Violations</CardTitle>
         </CardHeader>
         <CardContent className="p-0 px-2 pb-2">
           <RecentViolationsTable violations={recentViolations} />

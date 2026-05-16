@@ -4,20 +4,8 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import type { PageName } from '@/types';
 import {
-  Home,
-  AlertTriangle,
-  CreditCard,
-  History,
-  User,
-  Plus,
-  Users,
-  BarChart3,
-  LogOut,
-  FileText,
-  Shield,
-  Car,
-  Settings,
-  X,
+  Home, AlertTriangle, CreditCard, History, User, Plus,
+  Users, BarChart3, LogOut, FileText, Shield, Car, X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -62,14 +50,6 @@ function getNavItems(role: string): NavItem[] {
   }
 }
 
-function getRoleBadgeVariant(role: string) {
-  switch (role) {
-    case 'admin': return 'default';
-    case 'police': return 'secondary';
-    default: return 'outline';
-  }
-}
-
 function getRoleColor(role: string) {
   switch (role) {
     case 'admin': return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30';
@@ -98,25 +78,25 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="px-6 py-5 flex items-center gap-3">
-        <div className="h-9 w-9 rounded-lg bg-indigo-500 flex items-center justify-center">
+        <div className="h-9 w-9 rounded-lg bg-[var(--c-accent)] flex items-center justify-center">
           <Shield className="h-5 w-5 text-white" />
         </div>
         <div>
-          <h1 className="text-lg font-bold text-white tracking-wide">CIVITRA</h1>
-          <p className="text-[10px] text-zinc-500 uppercase tracking-widest">Traffic Management</p>
+          <h1 className="text-lg font-bold text-[var(--c-text)] tracking-wide">CIVITRA</h1>
+          <p className="text-[10px] text-[var(--c-text-subtle)] uppercase tracking-widest">Traffic Management</p>
         </div>
       </div>
 
-      <Separator className="bg-zinc-800" />
+      <Separator className="bg-[var(--c-border)]" />
 
       {/* User Info */}
       <div className="px-4 py-4">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-indigo-600/30 border border-indigo-500/30 flex items-center justify-center text-sm font-semibold text-indigo-400">
+          <div className="h-9 w-9 rounded-full bg-[var(--c-accent-bg)] border border-[var(--c-accent-border)] flex items-center justify-center text-sm font-semibold text-[var(--c-accent-text)]">
             {user.name.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-zinc-200 truncate">{user.name}</p>
+            <p className="text-sm font-medium text-[var(--c-text)] truncate">{user.name}</p>
             <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium border ${getRoleColor(user.role)}`}>
               {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
             </span>
@@ -124,7 +104,7 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
         </div>
       </div>
 
-      <Separator className="bg-zinc-800" />
+      <Separator className="bg-[var(--c-border)]" />
 
       {/* Navigation */}
       <ScrollArea className="flex-1 px-3 py-3">
@@ -137,8 +117,8 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
                 onClick={() => handleNavClick(item.page)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                   isActive
-                    ? 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/20'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50 border border-transparent'
+                    ? 'bg-[var(--c-accent-bg)] text-[var(--c-accent-text)] border border-[var(--c-accent-border)]'
+                    : 'text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-[var(--c-accent-bg)] border border-transparent'
                 }`}
               >
                 {item.icon}
@@ -149,14 +129,14 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
         </nav>
       </ScrollArea>
 
-      <Separator className="bg-zinc-800" />
+      <Separator className="bg-[var(--c-border)]" />
 
       {/* Logout */}
       <div className="p-3">
         <Button
           variant="ghost"
           onClick={logout}
-          className="w-full justify-start gap-3 text-zinc-400 hover:text-red-400 hover:bg-red-500/10"
+          className="w-full justify-start gap-3 text-[var(--c-text-muted)] hover:text-red-400 hover:bg-red-500/10"
         >
           <LogOut className="h-4 w-4" />
           Sign Out
@@ -168,7 +148,7 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
 
 export default function Sidebar() {
   return (
-    <aside className="hidden md:flex md:w-60 md:flex-col md:fixed md:inset-y-0 bg-[#111118] border-r border-zinc-800/50 z-30">
+    <aside className="hidden md:flex md:w-60 md:flex-col md:fixed md:inset-y-0 bg-[var(--c-sidebar)] border-r border-[var(--c-border)] z-30">
       <SidebarContent />
     </aside>
   );
@@ -182,7 +162,7 @@ interface MobileSidebarProps {
 export function MobileSidebar({ open, onClose }: MobileSidebarProps) {
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent side="left" className="w-60 p-0 bg-[#111118] border-zinc-800/50">
+      <SheetContent side="left" className="w-60 p-0 bg-[var(--c-sidebar)] border-[var(--c-border)]">
         <SheetHeader className="sr-only">
           <SheetTitle>Navigation Menu</SheetTitle>
         </SheetHeader>

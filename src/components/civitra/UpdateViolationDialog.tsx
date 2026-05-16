@@ -52,23 +52,23 @@ export default function UpdateViolationDialog({ violation, open, onOpenChange, o
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#16161f] border-zinc-800/50 text-zinc-200 sm:max-w-md">
+      <DialogContent className="bg-[var(--c-card)] border-[var(--c-border)] text-[var(--c-text)] sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-zinc-100">Update Violation</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-2">
           <div className="space-y-2">
-            <Label className="text-zinc-300 text-sm">Status</Label>
+            <Label className="text-[var(--c-text)] text-sm">Status</Label>
             {isPaid ? (
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-md px-3 py-2 text-sm text-emerald-400">
                 Paid — cannot be changed
               </div>
             ) : (
               <Select value={status} onValueChange={setStatus}>
-                <SelectTrigger className="bg-[#0a0a0f] border-zinc-700 text-zinc-200">
+                <SelectTrigger className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)]">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#16161f] border-zinc-700">
+                <SelectContent className="bg-[var(--c-card)] border-[var(--c-input-border)]">
                   <SelectItem value="pending">Pending</SelectItem>
                   <SelectItem value="cancelled">Cancelled</SelectItem>
                 </SelectContent>
@@ -76,25 +76,25 @@ export default function UpdateViolationDialog({ violation, open, onOpenChange, o
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-zinc-300 text-sm">Notes</Label>
+            <Label className="text-[var(--c-text)] text-sm">Notes</Label>
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add or update notes..."
               rows={3}
               disabled={isPaid}
-              className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 resize-none"
+              className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] resize-none"
             />
           </div>
         </div>
         <DialogFooter className="gap-2">
-          <Button variant="ghost" onClick={() => onOpenChange(false)} className="text-zinc-400 hover:text-white">
+          <Button variant="ghost" onClick={() => onOpenChange(false)} className="text-[var(--c-text-muted)] hover:text-[var(--c-text)]">
             Cancel
           </Button>
           <Button
             onClick={handleSubmit}
             disabled={loading || isPaid}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white"
           >
             {loading ? (
               <span className="flex items-center gap-2">

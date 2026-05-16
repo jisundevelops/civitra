@@ -54,7 +54,7 @@ export default function MyViolationsPage() {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <h2 className="text-xl font-bold text-white">My Violations</h2>
+      <h2 className="text-xl font-bold text-[var(--c-text)]">My Violations</h2>
 
       {/* Status Filter Tabs */}
       <div className="flex gap-2 flex-wrap">
@@ -64,7 +64,7 @@ export default function MyViolationsPage() {
             variant={activeFilter === filter ? 'default' : 'ghost'}
             size="sm"
             onClick={() => setActiveFilter(filter)}
-            className={activeFilter === filter ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'text-zinc-400 hover:text-white hover:bg-zinc-800'}
+            className={activeFilter === filter ? 'bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-zinc-800'}
           >
             {filter.charAt(0).toUpperCase() + filter.slice(1)}
           </Button>
@@ -74,44 +74,44 @@ export default function MyViolationsPage() {
       {loading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <Skeleton key={i} className="h-16 bg-[#16161f]" />
+            <Skeleton key={i} className="h-16 bg-[var(--c-card)]" />
           ))}
         </div>
       ) : violations.length === 0 ? (
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardContent className="py-12 text-center">
-            <AlertTriangle className="h-12 w-12 text-zinc-600 mx-auto mb-3" />
-            <p className="text-zinc-400 text-lg font-medium">No violations found 🎉</p>
-            <p className="text-zinc-500 text-sm mt-1">You&apos;re a responsible driver!</p>
+            <AlertTriangle className="h-12 w-12 text-[var(--c-text-subtle)] mx-auto mb-3" />
+            <p className="text-[var(--c-text-muted)] text-lg font-medium">No violations found 🎉</p>
+            <p className="text-[var(--c-text-subtle)] text-sm mt-1">You&apos;re a responsible driver!</p>
           </CardContent>
         </Card>
       ) : (
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800">
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">#</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Vehicle</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Violation</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Location</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Fine</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Status</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Date</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Action</th>
+                  <tr className="border-b border-[var(--c-border)]">
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">#</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Vehicle</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Violation</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Location</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Fine</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Status</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Date</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {violations.map((v, i) => (
-                    <tr key={v.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/20 transition-colors">
-                      <td className="py-3 px-4 text-zinc-500">{i + 1}</td>
-                      <td className="py-3 px-4 text-zinc-200 font-mono text-xs">{v.registrationNumber || '—'}</td>
-                      <td className="py-3 px-4 text-zinc-300">{v.violationTypeName || '—'}</td>
-                      <td className="py-3 px-4 text-zinc-400">{v.location || '—'}</td>
-                      <td className="py-3 px-4 text-zinc-200 font-medium">৳{v.fineAmount.toLocaleString()}</td>
+                    <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                      <td className="py-3 px-4 text-[var(--c-text-subtle)]">{i + 1}</td>
+                      <td className="py-3 px-4 text-[var(--c-text)] font-mono text-xs">{v.registrationNumber || '—'}</td>
+                      <td className="py-3 px-4 text-[var(--c-text)]">{v.violationTypeName || '—'}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)]">{v.location || '—'}</td>
+                      <td className="py-3 px-4 text-[var(--c-text)] font-medium">৳{v.fineAmount.toLocaleString()}</td>
                       <td className="py-3 px-4"><StatusBadge status={v.status} /></td>
-                      <td className="py-3 px-4 text-zinc-400 text-xs">{new Date(v.dateTime).toLocaleDateString()}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs">{new Date(v.dateTime).toLocaleDateString()}</td>
                       <td className="py-3 px-4">
                         {v.status === 'pending' && (
                           <Button

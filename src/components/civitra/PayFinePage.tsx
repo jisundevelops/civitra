@@ -80,32 +80,32 @@ export default function PayFinePage() {
   if (receipt) {
     return (
       <div className="max-w-lg mx-auto animate-fadeIn">
-        <Card className="bg-[#16161f] border-zinc-800/50 shadow-xl">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)] shadow-xl">
           <CardContent className="pt-8 text-center space-y-6">
             <div className="mx-auto h-20 w-20 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center">
               <CheckCircle className="h-10 w-10 text-emerald-400" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Payment Successful!</h3>
-              <p className="text-zinc-400 text-sm mt-1">Your fine has been paid successfully</p>
+              <h3 className="text-xl font-bold text-[var(--c-text)]">Payment Successful!</h3>
+              <p className="text-[var(--c-text-muted)] text-sm mt-1">Your fine has been paid successfully</p>
             </div>
-            <div className="bg-[#0a0a0f] rounded-lg p-5 space-y-3 text-left">
+            <div className="bg-[var(--c-bg)] rounded-lg p-5 space-y-3 text-left">
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Receipt Number</span>
-                <span className="text-white font-mono font-medium">{receipt.receiptNumber}</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Receipt Number</span>
+                <span className="text-[var(--c-text)] font-mono font-medium">{receipt.receiptNumber}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Amount Paid</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Amount Paid</span>
                 <span className="text-emerald-400 font-bold text-lg">৳{receipt.amount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Date</span>
-                <span className="text-zinc-200">{new Date().toLocaleDateString()}</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Date</span>
+                <span className="text-[var(--c-text)]">{new Date().toLocaleDateString()}</span>
               </div>
             </div>
             <Button
               onClick={() => setCurrentPage('my-violations')}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Violations
@@ -118,34 +118,34 @@ export default function PayFinePage() {
 
   return (
     <div className="max-w-lg mx-auto animate-fadeIn">
-      <Card className="bg-[#16161f] border-zinc-800/50 shadow-xl">
+      <Card className="bg-[var(--c-card)] border-[var(--c-border)] shadow-xl">
         <CardHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-10 w-10 rounded-lg bg-emerald-500/15 flex items-center justify-center">
               <CreditCard className="h-5 w-5 text-emerald-400" />
             </div>
             <div>
-              <CardTitle className="text-lg text-white">Pay Fine</CardTitle>
-              <CardDescription className="text-zinc-400">Pay a pending violation fine</CardDescription>
+              <CardTitle className="text-lg text-[var(--c-text)]">Pay Fine</CardTitle>
+              <CardDescription className="text-[var(--c-text-muted)]">Pay a pending violation fine</CardDescription>
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="space-y-2">
-            <Label className="text-zinc-300 text-sm">Violation ID</Label>
+            <Label className="text-[var(--c-text)] text-sm">Violation ID</Label>
             <div className="flex gap-2">
               <Input
                 value={violationId}
                 onChange={(e) => handleViolationIdChange(e.target.value)}
                 placeholder="Enter violation ID"
-                className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 font-mono text-sm"
+                className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] font-mono text-sm"
               />
               {!selectedViolationId && (
                 <Button
                   variant="ghost"
                   onClick={handleLookup}
                   disabled={fetchingViolation}
-                  className="text-zinc-400 hover:text-white hover:bg-zinc-800 whitespace-nowrap"
+                  className="text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-zinc-800 whitespace-nowrap"
                 >
                   Lookup
                 </Button>
@@ -154,25 +154,25 @@ export default function PayFinePage() {
           </div>
 
           {fetchingViolation && (
-            <div className="text-center py-4 text-zinc-400 text-sm">Loading violation details...</div>
+            <div className="text-center py-4 text-[var(--c-text-muted)] text-sm">Loading violation details...</div>
           )}
 
           {violation && !fetchingViolation && (
-            <div className="bg-[#0a0a0f] rounded-lg p-4 space-y-2">
+            <div className="bg-[var(--c-bg)] rounded-lg p-4 space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Vehicle</span>
-                <span className="text-zinc-200 font-mono">{violation.registrationNumber || '—'}</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Vehicle</span>
+                <span className="text-[var(--c-text)] font-mono">{violation.registrationNumber || '—'}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Violation</span>
-                <span className="text-zinc-200">{violation.violationTypeName || '—'}</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Violation</span>
+                <span className="text-[var(--c-text)]">{violation.violationTypeName || '—'}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Location</span>
-                <span className="text-zinc-200">{violation.location || '—'}</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Location</span>
+                <span className="text-[var(--c-text)]">{violation.location || '—'}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-zinc-400 text-sm">Status</span>
+                <span className="text-[var(--c-text-muted)] text-sm">Status</span>
                 <span className={`text-xs font-medium px-2 py-0.5 rounded border ${
                   violation.status === 'pending'
                     ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
@@ -183,9 +183,9 @@ export default function PayFinePage() {
                   {violation.status.charAt(0).toUpperCase() + violation.status.slice(1)}
                 </span>
               </div>
-              <div className="flex justify-between items-center pt-2 border-t border-zinc-800">
-                <span className="text-zinc-300 font-medium">Fine Amount</span>
-                <span className="text-white font-bold text-lg">৳{violation.fineAmount.toLocaleString()}</span>
+              <div className="flex justify-between items-center pt-2 border-t border-[var(--c-border)]">
+                <span className="text-[var(--c-text)] font-medium">Fine Amount</span>
+                <span className="text-[var(--c-text)] font-bold text-lg">৳{violation.fineAmount.toLocaleString()}</span>
               </div>
             </div>
           )}

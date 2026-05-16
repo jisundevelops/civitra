@@ -70,9 +70,9 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="max-w-2xl mx-auto space-y-6 animate-fadeIn">
-        <Skeleton className="h-10 w-48 bg-[#16161f]" />
-        <Skeleton className="h-48 bg-[#16161f]" />
-        <Skeleton className="h-32 bg-[#16161f]" />
+        <Skeleton className="h-10 w-48 bg-[var(--c-card)]" />
+        <Skeleton className="h-48 bg-[var(--c-card)]" />
+        <Skeleton className="h-32 bg-[var(--c-card)]" />
       </div>
     );
   }
@@ -82,12 +82,12 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fadeIn">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-white">My Profile</h2>
+        <h2 className="text-xl font-bold text-[var(--c-text)]">My Profile</h2>
         {!editing ? (
           <Button
             onClick={() => setEditing(true)}
             variant="ghost"
-            className="text-zinc-400 hover:text-indigo-400 hover:bg-indigo-500/10"
+            className="text-[var(--c-text-muted)] hover:text-[var(--c-accent-text)] hover:bg-[var(--c-accent-bg)]"
           >
             <Pencil className="h-4 w-4 mr-1" />
             Edit
@@ -102,7 +102,7 @@ export default function ProfilePage() {
                 }
               }}
               variant="ghost"
-              className="text-zinc-400 hover:text-white"
+              className="text-[var(--c-text-muted)] hover:text-[var(--c-text)]"
             >
               <X className="h-4 w-4 mr-1" />
               Cancel
@@ -110,7 +110,7 @@ export default function ProfilePage() {
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white"
             >
               <Save className="h-4 w-4 mr-1" />
               {saving ? 'Saving...' : 'Save'}
@@ -120,14 +120,14 @@ export default function ProfilePage() {
       </div>
 
       {/* Profile Card */}
-      <Card className="bg-[#16161f] border-zinc-800/50">
+      <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
         <CardContent className="p-6">
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-16 w-16 rounded-full bg-indigo-600/30 border border-indigo-500/30 flex items-center justify-center text-2xl font-bold text-indigo-400">
+            <div className="h-16 w-16 rounded-full bg-[var(--c-accent-bg)] border border-[var(--c-accent-border)] flex items-center justify-center text-2xl font-bold text-[var(--c-accent-text)]">
               {displayUser?.name.charAt(0).toUpperCase()}
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white">{displayUser?.name}</h3>
+              <h3 className="text-lg font-semibold text-[var(--c-text)]">{displayUser?.name}</h3>
               <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${getRoleColor(displayUser?.role || 'citizen')}`}>
                 {displayUser?.role.charAt(0).toUpperCase() + displayUser?.role.slice(1)}
               </span>
@@ -138,58 +138,58 @@ export default function ProfilePage() {
             {editing ? (
               <>
                 <div className="space-y-2">
-                  <Label className="text-zinc-300 text-sm">Full Name</Label>
+                  <Label className="text-[var(--c-text)] text-sm">Full Name</Label>
                   <Input
                     value={editForm.name}
                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                    className="bg-[#0a0a0f] border-zinc-700 text-zinc-200"
+                    className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)]"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-zinc-300 text-sm">Phone</Label>
+                  <Label className="text-[var(--c-text)] text-sm">Phone</Label>
                   <Input
                     value={editForm.phone}
                     onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                    className="bg-[#0a0a0f] border-zinc-700 text-zinc-200"
+                    className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)]"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-zinc-300 text-sm">NID</Label>
+                  <Label className="text-[var(--c-text)] text-sm">NID</Label>
                   <Input
                     value={editForm.nid}
                     onChange={(e) => setEditForm({ ...editForm, nid: e.target.value })}
-                    className="bg-[#0a0a0f] border-zinc-700 text-zinc-200"
+                    className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)]"
                   />
                 </div>
               </>
             ) : (
               <>
                 <div className="flex items-center gap-3 py-2">
-                  <Mail className="h-4 w-4 text-zinc-500" />
+                  <Mail className="h-4 w-4 text-[var(--c-text-subtle)]" />
                   <div>
-                    <p className="text-xs text-zinc-500">Email</p>
-                    <p className="text-sm text-zinc-200">{displayUser?.email}</p>
+                    <p className="text-xs text-[var(--c-text-subtle)]">Email</p>
+                    <p className="text-sm text-[var(--c-text)]">{displayUser?.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 py-2">
-                  <Phone className="h-4 w-4 text-zinc-500" />
+                  <Phone className="h-4 w-4 text-[var(--c-text-subtle)]" />
                   <div>
-                    <p className="text-xs text-zinc-500">Phone</p>
-                    <p className="text-sm text-zinc-200">{displayUser?.phone || 'Not set'}</p>
+                    <p className="text-xs text-[var(--c-text-subtle)]">Phone</p>
+                    <p className="text-sm text-[var(--c-text)]">{displayUser?.phone || 'Not set'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 py-2">
-                  <CreditCard className="h-4 w-4 text-zinc-500" />
+                  <CreditCard className="h-4 w-4 text-[var(--c-text-subtle)]" />
                   <div>
-                    <p className="text-xs text-zinc-500">NID</p>
-                    <p className="text-sm text-zinc-200">{displayUser?.nid || 'Not set'}</p>
+                    <p className="text-xs text-[var(--c-text-subtle)]">NID</p>
+                    <p className="text-sm text-[var(--c-text)]">{displayUser?.nid || 'Not set'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 py-2">
-                  <Calendar className="h-4 w-4 text-zinc-500" />
+                  <Calendar className="h-4 w-4 text-[var(--c-text-subtle)]" />
                   <div>
-                    <p className="text-xs text-zinc-500">Member Since</p>
-                    <p className="text-sm text-zinc-200">{new Date(displayUser?.createdAt || '').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-xs text-[var(--c-text-subtle)]">Member Since</p>
+                    <p className="text-sm text-[var(--c-text)]">{new Date(displayUser?.createdAt || '').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                   </div>
                 </div>
               </>
@@ -199,26 +199,26 @@ export default function ProfilePage() {
       </Card>
 
       {/* Vehicles Section */}
-      <Card className="bg-[#16161f] border-zinc-800/50">
+      <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold text-zinc-200 flex items-center gap-2">
+          <CardTitle className="text-base font-semibold text-[var(--c-text)] flex items-center gap-2">
             <Car className="h-4 w-4 text-cyan-400" />
             Registered Vehicles
           </CardTitle>
         </CardHeader>
         <CardContent>
           {vehicles.length === 0 ? (
-            <p className="text-zinc-500 text-sm py-4 text-center">No vehicles registered</p>
+            <p className="text-[var(--c-text-subtle)] text-sm py-4 text-center">No vehicles registered</p>
           ) : (
             <div className="space-y-2">
               {vehicles.map((v) => (
-                <div key={v.id} className="flex items-center justify-between py-2 px-3 rounded-lg bg-[#0a0a0f] border border-zinc-800/50">
+                <div key={v.id} className="flex items-center justify-between py-2 px-3 rounded-lg bg-[var(--c-bg)] border border-[var(--c-border)]">
                   <div className="flex items-center gap-3">
-                    <Car className="h-4 w-4 text-zinc-500" />
-                    <span className="text-zinc-200 font-mono text-sm">{v.registrationNumber}</span>
+                    <Car className="h-4 w-4 text-[var(--c-text-subtle)]" />
+                    <span className="text-[var(--c-text)] font-mono text-sm">{v.registrationNumber}</span>
                   </div>
                   {v.vehicleType && (
-                    <span className="text-zinc-400 text-xs">{v.vehicleType}</span>
+                    <span className="text-[var(--c-text-muted)] text-xs">{v.vehicleType}</span>
                   )}
                 </div>
               ))}

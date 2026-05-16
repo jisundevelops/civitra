@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import AppLayout from '@/components/civitra/AppLayout';
 import LandingPage from '@/components/civitra/LandingPage';
 import LoginPage from '@/components/civitra/LoginPage';
@@ -81,8 +82,10 @@ function AppContent() {
 
 export default function Home() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

@@ -99,10 +99,10 @@ export default function AdminUsersPage() {
   return (
     <div className="space-y-6 animate-fadeIn">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-white">Users</h2>
+        <h2 className="text-xl font-bold text-[var(--c-text)]">Users</h2>
         <Button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white"
         >
           {showAddForm ? <X className="h-4 w-4 mr-1" /> : <Plus className="h-4 w-4 mr-1" />}
           {showAddForm ? 'Cancel' : 'Add Officer'}
@@ -111,9 +111,9 @@ export default function AdminUsersPage() {
 
       {/* Add Officer Form */}
       {showAddForm && (
-        <Card className="bg-[#16161f] border-indigo-500/20">
+        <Card className="bg-[var(--c-card)] border-[var(--c-accent-border)]">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base text-zinc-200 flex items-center gap-2">
+            <CardTitle className="text-base text-[var(--c-text)] flex items-center gap-2">
               <Shield className="h-4 w-4 text-cyan-400" />
               Add New Officer
             </CardTitle>
@@ -121,41 +121,41 @@ export default function AdminUsersPage() {
           <CardContent>
             <form onSubmit={handleAddOfficer} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-zinc-300 text-xs">Name *</Label>
+                <Label className="text-[var(--c-text)] text-xs">Name *</Label>
                 <Input
                   value={addForm.name}
                   onChange={(e) => setAddForm({ ...addForm, name: e.target.value })}
                   placeholder="Full Name"
-                  className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 h-9"
+                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-zinc-300 text-xs">Email *</Label>
+                <Label className="text-[var(--c-text)] text-xs">Email *</Label>
                 <Input
                   type="email"
                   value={addForm.email}
                   onChange={(e) => setAddForm({ ...addForm, email: e.target.value })}
                   placeholder="Email"
-                  className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 h-9"
+                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-zinc-300 text-xs">Password *</Label>
+                <Label className="text-[var(--c-text)] text-xs">Password *</Label>
                 <Input
                   type="password"
                   value={addForm.password}
                   onChange={(e) => setAddForm({ ...addForm, password: e.target.value })}
                   placeholder="Min 6 characters"
-                  className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 h-9"
+                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-zinc-300 text-xs">Phone</Label>
+                <Label className="text-[var(--c-text)] text-xs">Phone</Label>
                 <Input
                   value={addForm.phone}
                   onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })}
                   placeholder="+880..."
-                  className="bg-[#0a0a0f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600 h-9"
+                  className="bg-[var(--c-bg)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)] h-9"
                 />
               </div>
               <div className="sm:col-span-2">
@@ -171,19 +171,19 @@ export default function AdminUsersPage() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--c-text-subtle)]" />
           <Input
             placeholder="Search users..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-9 bg-[#16161f] border-zinc-700 text-zinc-200 placeholder:text-zinc-600"
+            className="pl-9 bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)] placeholder:text-[var(--c-text-subtle)]"
           />
         </div>
         <Select value={roleFilter} onValueChange={setRoleFilter}>
-          <SelectTrigger className="w-full sm:w-40 bg-[#16161f] border-zinc-700 text-zinc-200">
+          <SelectTrigger className="w-full sm:w-40 bg-[var(--c-card)] border-[var(--c-input-border)] text-[var(--c-text)]">
             <SelectValue placeholder="Role" />
           </SelectTrigger>
-          <SelectContent className="bg-[#16161f] border-zinc-700">
+          <SelectContent className="bg-[var(--c-card)] border-[var(--c-input-border)]">
             <SelectItem value="all">All Roles</SelectItem>
             <SelectItem value="admin">Admin</SelectItem>
             <SelectItem value="police">Police</SelectItem>
@@ -195,31 +195,31 @@ export default function AdminUsersPage() {
       {loading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <Skeleton key={i} className="h-16 bg-[#16161f]" />
+            <Skeleton key={i} className="h-16 bg-[var(--c-card)]" />
           ))}
         </div>
       ) : (
-        <Card className="bg-[#16161f] border-zinc-800/50">
+        <Card className="bg-[var(--c-card)] border-[var(--c-border)]">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800">
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Name</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Email</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Phone</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Role</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Status</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Joined</th>
-                    <th className="text-left py-3 px-4 text-zinc-400 font-medium">Actions</th>
+                  <tr className="border-b border-[var(--c-border)]">
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Name</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Email</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Phone</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Role</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Status</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Joined</th>
+                    <th className="text-left py-3 px-4 text-[var(--c-text-muted)] font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((u) => (
-                    <tr key={u.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/20 transition-colors">
-                      <td className="py-3 px-4 text-zinc-200 font-medium">{u.name}</td>
-                      <td className="py-3 px-4 text-zinc-400 text-xs">{u.email}</td>
-                      <td className="py-3 px-4 text-zinc-400">{u.phone || '—'}</td>
+                    <tr key={u.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                      <td className="py-3 px-4 text-[var(--c-text)] font-medium">{u.name}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs">{u.email}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)]">{u.phone || '—'}</td>
                       <td className="py-3 px-4"><RoleBadge role={u.role} /></td>
                       <td className="py-3 px-4">
                         <span className={`inline-flex items-center gap-1 text-xs font-medium ${u.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -227,7 +227,7 @@ export default function AdminUsersPage() {
                           {u.isActive ? 'Active' : 'Inactive'}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-zinc-400 text-xs">{new Date(u.createdAt).toLocaleDateString()}</td>
+                      <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs">{new Date(u.createdAt).toLocaleDateString()}</td>
                       <td className="py-3 px-4">
                         {u.role !== 'admin' && (
                           <Button
