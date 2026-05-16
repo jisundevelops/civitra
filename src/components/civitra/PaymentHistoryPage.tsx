@@ -68,7 +68,7 @@ export default function PaymentHistoryPage() {
                 </thead>
                 <tbody>
                   {payments.map((p) => (
-                    <tr key={p.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                    <tr key={p.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <Receipt className="h-3.5 w-3.5 text-[var(--c-text-subtle)]" />

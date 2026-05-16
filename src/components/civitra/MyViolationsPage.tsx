@@ -16,7 +16,7 @@ function StatusBadge({ status }: { status: string }) {
     cancelled: 'bg-red-500/15 text-red-400 border-red-500/30',
   };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[status] || 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[status] || 'bg-[var(--c-accent-bg)] text-[var(--c-text-muted)] border-[var(--c-accent-border)]'}`}>
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </span>
   );
@@ -64,7 +64,7 @@ export default function MyViolationsPage() {
             variant={activeFilter === filter ? 'default' : 'ghost'}
             size="sm"
             onClick={() => setActiveFilter(filter)}
-            className={activeFilter === filter ? 'bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-zinc-800'}
+            className={activeFilter === filter ? 'bg-[var(--c-accent)] hover:bg-[var(--c-accent-hover)] text-white' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-[var(--c-card-hover)]/30'}
           >
             {filter.charAt(0).toUpperCase() + filter.slice(1)}
           </Button>
@@ -104,7 +104,7 @@ export default function MyViolationsPage() {
                 </thead>
                 <tbody>
                   {violations.map((v, i) => (
-                    <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                    <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4 text-[var(--c-text-subtle)]">{i + 1}</td>
                       <td className="py-3 px-4 text-[var(--c-text)] font-mono text-xs">{v.registrationNumber || '—'}</td>
                       <td className="py-3 px-4 text-[var(--c-text)]">{v.violationTypeName || '—'}</td>

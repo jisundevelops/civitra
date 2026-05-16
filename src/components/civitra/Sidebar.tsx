@@ -37,7 +37,7 @@ const adminNav: NavItem[] = [
   { label: 'Dashboard', page: 'dashboard', icon: <Home className="h-4 w-4" /> },
   { label: 'Users', page: 'admin-users', icon: <Users className="h-4 w-4" /> },
   { label: 'All Violations', page: 'all-violations', icon: <FileText className="h-4 w-4" /> },
-  { label: 'Add Officer', page: 'issue-ticket', icon: <Shield className="h-4 w-4" /> },
+  { label: 'Add Officer', page: 'add-officer', icon: <Shield className="h-4 w-4" /> },
   { label: 'Reports', page: 'reports', icon: <BarChart3 className="h-4 w-4" /> },
   { label: 'Violation Types', page: 'violation-types', icon: <Car className="h-4 w-4" /> },
 ];

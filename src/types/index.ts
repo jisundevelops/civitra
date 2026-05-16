@@ -92,4 +92,5 @@ export type PageName =
   | 'admin-users'
   | 'reports'
   | 'violation-types'
+  | 'add-officer'
   | 'profile';

@@ -198,7 +198,7 @@ export default function ViolationTypesPage() {
                 </thead>
                 <tbody>
                   {types.map((vt) => (
-                    <tr key={vt.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                    <tr key={vt.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4 text-[var(--c-text)] font-medium">{vt.name}</td>
                       <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs max-w-48 truncate">{vt.description || '—'}</td>
                       <td className="py-3 px-4 text-[var(--c-text)] font-medium">৳{vt.fineAmount.toLocaleString()}</td>

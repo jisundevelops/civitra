@@ -129,27 +129,27 @@ export default function ReportsPage() {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--c-border)" />
                   <XAxis
                     dataKey="name"
-                    tick={{ fill: '#a1a1aa', fontSize: 11 }}
-                    axisLine={{ stroke: '#27272a' }}
-                    tickLine={{ stroke: '#27272a' }}
+                    tick={{ fill: 'var(--c-text-muted)', fontSize: 11 }}
+                    axisLine={{ stroke: 'var(--c-border)' }}
+                    tickLine={{ stroke: 'var(--c-border)' }}
                   />
                   <YAxis
-                    tick={{ fill: '#a1a1aa', fontSize: 11 }}
-                    axisLine={{ stroke: '#27272a' }}
-                    tickLine={{ stroke: '#27272a' }}
+                    tick={{ fill: 'var(--c-text-muted)', fontSize: 11 }}
+                    axisLine={{ stroke: 'var(--c-border)' }}
+                    tickLine={{ stroke: 'var(--c-border)' }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#16161f',
-                      border: '1px solid #27272a',
+                      backgroundColor: 'var(--c-card)',
+                      border: '1px solid var(--c-border)',
                       borderRadius: '8px',
-                      color: '#e4e4e7',
+                      color: 'var(--c-text)',
                     }}
                   />
-                  <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} name="Count" />
+                  <Bar dataKey="count" fill="var(--c-accent)" radius={[4, 4, 0, 0]} name="Count" />
                 </BarChart>
               </ResponsiveContainer>
             </div>

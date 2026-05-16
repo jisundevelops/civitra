@@ -18,7 +18,7 @@ function StatusBadge({ status }: { status: string }) {
     cancelled: 'bg-red-500/15 text-red-400 border-red-500/30',
   };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[status] || 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[status] || 'bg-[var(--c-accent-bg)] text-[var(--c-text-muted)] border-[var(--c-accent-border)]'}`}>
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </span>
   );
@@ -134,7 +134,7 @@ export default function AllViolationsPage() {
                 </thead>
                 <tbody>
                   {violations.map((v) => (
-                    <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                    <tr key={v.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4 text-[var(--c-text)] font-mono text-xs">{v.registrationNumber || '—'}</td>
                       <td className="py-3 px-4 text-[var(--c-text)]">{v.ownerName || '—'}</td>
                       <td className="py-3 px-4 text-[var(--c-text)]">{v.violationTypeName || '—'}</td>

@@ -20,18 +20,22 @@ function RoleBadge({ role }: { role: string }) {
     citizen: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
   };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[role] || 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${colors[role] || 'bg-[var(--c-accent-bg)] text-[var(--c-text-muted)] border-[var(--c-accent-border)]'}`}>
       {role.charAt(0).toUpperCase() + role.slice(1)}
     </span>
   );
 }
 
-export default function AdminUsersPage() {
+interface AdminUsersPageProps {
+  autoOpenAddForm?: boolean;
+}
+
+export default function AdminUsersPage({ autoOpenAddForm }: AdminUsersPageProps = {}) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(autoOpenAddForm || false);
   const [addForm, setAddForm] = useState({ name: '', email: '', password: '', phone: '' });
   const [addLoading, setAddLoading] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -216,7 +220,7 @@ export default function AdminUsersPage() {
                 </thead>
                 <tbody>
                   {users.map((u) => (
-                    <tr key={u.id} className="border-b border-[var(--c-border)] hover:bg-zinc-800/20 transition-colors">
+                    <tr key={u.id} className="border-b border-[var(--c-border)] hover:bg-[var(--c-card-hover)]/30 transition-colors">
                       <td className="py-3 px-4 text-[var(--c-text)] font-medium">{u.name}</td>
                       <td className="py-3 px-4 text-[var(--c-text-muted)] text-xs">{u.email}</td>
                       <td className="py-3 px-4 text-[var(--c-text-muted)]">{u.phone || '—'}</td>

@@ -24,12 +24,12 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--c-bg)] flex items-center justify-center">
         <div className="space-y-4 text-center">
-          <div className="h-12 w-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center mx-auto animate-pulse">
-            <div className="h-6 w-6 rounded bg-indigo-500/40" />
+          <div className="h-12 w-12 rounded-xl bg-[var(--c-accent-bg)] border border-[var(--c-accent-border)] flex items-center justify-center mx-auto animate-pulse">
+            <div className="h-6 w-6 rounded bg-[var(--c-accent)]/40" />
           </div>
-          <p className="text-zinc-500 text-sm">Loading Civitra...</p>
+          <p className="text-[var(--c-text-subtle)] text-sm">Loading Civitra...</p>
         </div>
       </div>
     );
@@ -66,6 +66,8 @@ function AppContent() {
         return <IssueTicketPage />;
       case 'admin-users':
         return <AdminUsersPage />;
+      case 'add-officer':
+        return <AdminUsersPage autoOpenAddForm />;
       case 'reports':
         return <ReportsPage />;
       case 'violation-types':

@@ -145,7 +145,7 @@ export default function PayFinePage() {
                   variant="ghost"
                   onClick={handleLookup}
                   disabled={fetchingViolation}
-                  className="text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-zinc-800 whitespace-nowrap"
+                  className="text-[var(--c-text-muted)] hover:text-[var(--c-text)] hover:bg-[var(--c-card-hover)]/30 whitespace-nowrap"
                 >
                   Lookup
                 </Button>
