@@ -56,6 +56,32 @@ export async function POST(request: Request) {
       results.push("Could not verify User table structure");
     }
 
+    // Assign citizenIds to citizens who don't have one
+    try {
+      const citizens = await db.user.findMany({
+        where: { role: "citizen", citizenId: null },
+        select: { id: true },
+      });
+      let assigned = 0;
+      for (const citizen of citizens) {
+        const year = new Date().getFullYear();
+        const random = Math.floor(1000 + Math.random() * 9000);
+        const newCitizenId = `CIV-${year}-${random}`;
+        try {
+          await db.user.update({
+            where: { id: citizen.id },
+            data: { citizenId: newCitizenId },
+          });
+          assigned++;
+        } catch {
+          // Skip if duplicate (very unlikely with random)
+        }
+      }
+      results.push(`Assigned citizenId to ${assigned} citizens`);
+    } catch (err) {
+      results.push(`citizenId assignment: ${err instanceof Error ? err.message : "skipped"}`);
+    }
+
     // Test login query
     let loginTest = "not_tested";
     try {
